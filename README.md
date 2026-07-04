@@ -144,4 +144,5 @@ As the project evolves, additional challenge modules and improvements to the cor
 
 ## License
 
-This project is under the MIT licence.
+This project is under the MIT license.   
+[License](LICENSE)
