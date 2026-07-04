@@ -1,0 +1,29 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+      - "5432:5432" # remove later; just for quick debugging purposes
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/vulnarebelapp
+
+  db:
+    image: postgres:15-alpine
+    container_name: vulnarebeldb
+    environment:
+      POSTGRES_DB: vulnarebelapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      retries: 30
+
+volumes:
+  pgdata:

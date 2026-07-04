@@ -1,0 +1,23 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+src/main/resources/archetype-resources
+/src/main/resources/META-INF/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# Docker
+db/data/
+
+# Environment
+.env
+
+# Others
+ROADMAP.md
