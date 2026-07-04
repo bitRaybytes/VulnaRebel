@@ -96,7 +96,6 @@ src/main/java/
   │   └── ...        More upcoming
   ├── exceptions/    Custom exceptions
   └── service/       empty yet
-^
 ```
 
 This architecture allows the platform to grow while keeping challenges isolated from the underlying infrastructure.
