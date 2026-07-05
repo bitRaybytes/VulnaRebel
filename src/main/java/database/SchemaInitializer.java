@@ -1,9 +1,13 @@
 package database;
 
-import java.io.BufferedReader;
+import config.Configuration;
+import exceptions.SchemaInitializerException;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /// This class' purpose is to initialize a challenge's table in the database. </br>
 /// It will also read the modules database dummy data in seeds.sql and  </br>
@@ -11,27 +15,49 @@ import java.nio.file.Path;
 /// Executes SQL scripts
 public class SchemaInitializer {
 
-    // 1. read resources to set up database table for a challenge
-    // => like "challenges/{challengeName}/schema.sql" from classpath
-    // 2. Execute it
-    // 3. read resources to set up dummy data for challenge
-    // => like "challenges/{challengeName}/seed.sql" from classpath
-    // 4. Execute it
+    private final DatabaseManager manager;
+    private final Configuration challengeConfig;
 
-    public SchemaInitializer(){}
+    // TODO: read challenge-specific db settings related to name, multiple queries...
 
-
-    // String challengeName and Connection connection as parameters
-    public BufferedReader setupChallenge() throws IOException {
-        return Files.newBufferedReader(Path.of(String.valueOf(SchemaInitializer.class.getClassLoader().getResourceAsStream("challenges/login/schema.sql"))));
+    public SchemaInitializer(
+            DatabaseManager manager,
+            Configuration challengeConfig){
+        this.manager = manager;
+        this.challengeConfig = challengeConfig;
     }
 
-    public static void main(String[] args) throws IOException {
+    public void initialize(String challengeName) throws SchemaInitializerException {
+        try (Connection conn = manager.getConnection()) {
+            executeSqlFile(conn, "challenges/" + challengeName + "/schema.sql");
+            executeSqlFile(conn, "challenges/" + challengeName + "/seed.sql");
+        } catch (SQLException | InterruptedException e) {
+            throw new SchemaInitializerException(
+                    SchemaInitializer.class.getName()+
+                            ": Failed to initialize database table.", e);
+        }
+    }
 
+    private void executeSqlFile(Connection conn, String path) throws SchemaInitializerException {
+        try (InputStream is = SchemaInitializer.class.getResourceAsStream("/" + path)) {
 
-        BufferedReader reader = new SchemaInitializer().setupChallenge();
-        System.out.println(reader);
+            if (is == null) throw new SchemaInitializerException("Resource not found: " + path);
 
+            String content = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+
+            for (String statement : content.split(";")) {
+                String trimmed = statement.trim();
+                if (!trimmed.isEmpty()) {
+                    try (var stmt = conn.createStatement()) {
+                        stmt.execute(trimmed);
+                    }
+                }
+            }
+        } catch (IOException | SQLException e) {
+            throw new SchemaInitializerException(
+                    SchemaInitializer.class.getName()+
+                            ": Failed to read sql file.", e);
+        }
     }
 
 }
