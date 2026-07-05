@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class DatabaseManager {
     private static final Logger LOGGER = Logger.getLogger(DatabaseManager.class.getName());
 
-    private Configuration config;
+    private final Configuration config;
 
     public DatabaseManager(Configuration config){
         if (config == null){
