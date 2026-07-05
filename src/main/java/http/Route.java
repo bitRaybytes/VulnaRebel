@@ -3,7 +3,7 @@ package http;
 import com.sun.net.httpserver.HttpHandler;
 import exceptions.RouteException;
 
-/// This class represents a single endpoint-to-handler mapping.</br>
+/// This class represents a single path-to-handler mapping.</br>
 
 public class Route {
     private final HttpHandler handler;
