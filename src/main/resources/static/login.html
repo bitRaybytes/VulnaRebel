@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VulnaRebel — Login Challenge</title>
+</head>
+<style>
+    .formwrapper{
+        display:flex;
+        justify-content:center;
+        align-text:center;
+        min-height: 250px;
+    }
+    input{
+        font-size:16px;
+        height:35px;
+
+    }
+</style>
+<body>
+<h1>Welcome to VulnaRebel</h1>
+<h2>Please log in to chat with users</h2>
+<div class="formwrapper">
+    <form action="/login" method="post">
+        <input type="text"     name="username" placeholder="Username"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="submit"   value="Login">
+    </form>
+</div>
+
+</body>
+</html>
