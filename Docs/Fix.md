@@ -16,3 +16,10 @@ docker-compose logs web
 
 docker-compose logs db
 ```
+
+## Check Database
+
+```bash
+# To start the postgreSQL database instance, run:
+docker exec -it vulnarebeldb psql -U postgres -d vulnarebelapp
+```

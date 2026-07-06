@@ -25,7 +25,7 @@ public class LoginService {
         }
 
         String query =
-                "SELECT * FROM users WHERE username = '" + username +
+                "SELECT * FROM login_users WHERE username = '" + username +
                         "' AND password = '" + password + "'";
 
         try (var conn = manager.getConnection();

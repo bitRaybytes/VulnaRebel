@@ -38,7 +38,7 @@ public class DatabaseManager {
         for (int i = 1; i<=retries;i++){
             try{
                 connection = DriverManager.getConnection(
-                        config.getString("database.url"),
+                        config.getString("database.url.prod"),
                         config.getString("database.user"),
                         config.getString("database.pass"));
 
