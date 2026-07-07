@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
 
-/// This class handles the index.html by sending the input of the resource to the
+/// This class handles the index.html
 public class IndexHandler extends BaseHandler{
     @Override
     protected void doGet(HttpExchange exchange) throws IOException {
