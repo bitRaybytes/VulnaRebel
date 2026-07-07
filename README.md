@@ -94,8 +94,7 @@ src/main/java/
   ├── challenge/
   │   ├── login/     SQL Injection challenge
   │   └── ...        More upcoming
-  ├── exceptions/    Custom exceptions
-  └── service/       empty yet
+  └── exceptions/    Custom exceptions
 ```
 
 This architecture allows the platform to grow while keeping challenges isolated from the underlying infrastructure.
