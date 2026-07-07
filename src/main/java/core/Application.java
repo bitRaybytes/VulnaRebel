@@ -7,11 +7,6 @@ import java.util.logging.Logger;
 
 public class Application {
     private static final Logger LOG = Logger.getLogger(Application.class.getName());
-    // this class is used to orchestrate following
-    // - Configuration
-    // - Database
-    // - HTTP
-    // - Challenges
 
     private final VulnaHttpServer server;
     private final Router router;
