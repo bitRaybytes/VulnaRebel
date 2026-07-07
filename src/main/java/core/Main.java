@@ -32,7 +32,7 @@ public class Main {
 
         // routing
         Router router = new Router();
-        router.register(new Route("/",      new IndexHandler()));
+//        router.register(new Route("/",      new IndexHandler()));
         router.register(new Route("/login", loginHandler));
 
         // server
