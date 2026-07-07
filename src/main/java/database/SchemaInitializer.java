@@ -37,6 +37,12 @@ public class SchemaInitializer {
         this.challengeConfig = challengeConfig;
     }
 
+    /**
+     * By providing the parameter, this method will resolve to its corresponding directory
+     * to load the schema as well as the seed.sql files to instantiate the database table.
+     * @param challengeName will resolve its corresponding directory.
+     * @throws SchemaInitializerException
+     */
     public void initialize(String challengeName) throws SchemaInitializerException {
         if (challengeName == null || challengeName.isBlank()){
             throw new SchemaInitializerException(

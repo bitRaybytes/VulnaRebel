@@ -15,6 +15,11 @@ public class Router {
 
     }
 
+    /**
+     * To register a Route in {@code routes}
+     * @param route - a route of Route object will get add to the list.
+     * @throws RouterException
+     */
     public void register(Route route) {
         if (route == null) {
             throw new RouterException(
