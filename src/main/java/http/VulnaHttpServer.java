@@ -2,6 +2,7 @@ package http;
 
 import com.sun.net.httpserver.HttpHandler;
 import config.Configuration;
+import exceptions.VulnaHttpServerException;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,10 +17,17 @@ public class VulnaHttpServer {
     /// @param server the `HttpServer` to act as the instance.
     private static final Logger LOGGER = Logger.getLogger(VulnaHttpServer.class.getName());
     private final int delay;
-    private com.sun.net.httpserver.HttpServer server;
+    private final com.sun.net.httpserver.HttpServer server;
 
 
     public VulnaHttpServer(Configuration config) throws IOException {
+        if (config == null){
+            throw new VulnaHttpServerException(
+                    VulnaHttpServer.class.getName() +
+                            ": Config file cannot be null."
+            );
+        }
+
         int port    = config.getInt("server.port");
         int threads = config.getInt("server.execute.threads");
         delay = config.getInt("server.stop.delay");
@@ -39,14 +47,13 @@ public class VulnaHttpServer {
         }
     }
 
-    public void addContext(String path, HttpHandler handler) {
-        server.createContext(path, handler);
-    }
-
     public void applyRoutes(Router router) {
         for (Route route : router.getRoutes()) {
-            server.createContext(route.getPath(), route.getHandler());
+            addContext(route.getPath(), route.getHandler());
         }
     }
 
+    private void addContext(String path, HttpHandler handler) {
+        server.createContext(path, handler);
+    }
 }
