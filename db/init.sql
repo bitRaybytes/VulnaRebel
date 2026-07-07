@@ -1,2 +1,2 @@
 -- VulnaRebel schema init
--- Tables are managed by ChallengeSchemaInitializer
+-- Tables are managed by SchemaInitializer
