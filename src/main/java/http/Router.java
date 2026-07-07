@@ -17,14 +17,16 @@ public class Router {
 
     public void register(Route route) {
         if (route == null) {
-            throw new RouterException(Router.class.getName() +
-                    ": Route cannot be null.");
+            throw new RouterException(
+                    getClass().getName() +
+                            ": Route cannot be null.");
         }
 
         for (Route existing : routes) {
             if (existing.getPath().equals(route.getPath())) {
-                throw new RouterException(Router.class.getName() +
-                        ": Duplicate route detected: " + route.getPath()
+                throw new RouterException(
+                        getClass().getName() +
+                            ": Duplicate route detected: " + route.getPath()
                 );
             }
         }

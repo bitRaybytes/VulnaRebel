@@ -13,18 +13,17 @@ import java.util.logging.Logger;
 /// If calling a `VulnaHttpServer` object the server will get implicitly instantiated.</br>
 
 public class VulnaHttpServer {
-    /// @param delay the delay it takes to stop the server.
-    /// @param server the `HttpServer` to act as the instance.
     private static final Logger LOGGER = Logger.getLogger(VulnaHttpServer.class.getName());
     private final int delay;
     private final com.sun.net.httpserver.HttpServer server;
 
 
+    /// @param config provides the configuration properties.
     public VulnaHttpServer(Configuration config) throws IOException {
         if (config == null){
             throw new VulnaHttpServerException(
-                    VulnaHttpServer.class.getName() +
-                            ": Config file cannot be null."
+                    getClass().getName() +
+                            ": Configuration file cannot be null."
             );
         }
 
@@ -37,6 +36,12 @@ public class VulnaHttpServer {
     }
 
     public void start() {
+        if (server == null) {
+            throw new VulnaHttpServerException(
+                    getClass().getName() +
+                            ": Cannot start, because server is null."
+            );
+        }
         server.start();
         LOGGER.info("Server started on port " + server.getAddress().getPort());
     }
@@ -54,6 +59,17 @@ public class VulnaHttpServer {
     }
 
     private void addContext(String path, HttpHandler handler) {
+        if (path == null || path.isBlank()){
+            throw new VulnaHttpServerException(
+                    getClass().getName() + ": Context path cannot be null."
+            );
+        }
+        if (handler == null){
+            throw new VulnaHttpServerException(
+                    getClass().getName() +
+                            ": HttpHandler cannot be null."
+            );
+        }
         server.createContext(path, handler);
     }
 }

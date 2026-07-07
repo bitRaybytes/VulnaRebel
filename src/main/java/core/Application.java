@@ -1,5 +1,6 @@
 package core;
 
+import exceptions.ApplicationException;
 import http.Router;
 import http.VulnaHttpServer;
 
@@ -12,6 +13,7 @@ public class Application {
     private final Router router;
 
     public Application(VulnaHttpServer server, Router router) {
+        validate(server,router);
         this.server = server;
         this.router = router;
     }
@@ -19,12 +21,26 @@ public class Application {
     public void start() {
         server.applyRoutes(router);
         server.start();
-        LOG.info("VulnaRebel started.");
+        LOG.info(getClass().getName() + " – VulnaRebel started.");
     }
 
     public void stop() {
         server.stop();
-        LOG.info("VulnaRebel stopped.");
+        LOG.info(getClass().getName() + " – VulnaRebel stopped.");
     }
 
+    private void validate(VulnaHttpServer server, Router router) {
+        if (server == null){
+            throw new ApplicationException(
+                    getClass().getName() +
+                            ": Server cannot be null."
+            );
+        }
+        if (router == null){
+            throw new ApplicationException(
+                    getClass().getName() +
+                            ": Router cannot be null."
+            );
+        }
+    }
 }

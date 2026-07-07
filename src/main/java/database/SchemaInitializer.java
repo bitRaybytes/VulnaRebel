@@ -22,7 +22,17 @@ public class SchemaInitializer {
 
     public SchemaInitializer(
             DatabaseManager manager,
-            Configuration challengeConfig){
+            Configuration challengeConfig) throws SchemaInitializerException {
+        if (manager == null){
+            throw new SchemaInitializerException(
+                    getClass().getName() + ": DatabaseManager cannot be null."
+            );
+        }
+        if (challengeConfig == null){
+            throw new SchemaInitializerException(
+                    getClass().getName() + ": Challenge's config cannot be null."
+            );
+        }
         this.manager = manager;
         this.challengeConfig = challengeConfig;
     }

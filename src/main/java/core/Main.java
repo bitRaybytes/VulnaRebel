@@ -6,16 +6,16 @@ import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
 import database.SchemaInitializer;
-import exceptions.ApplicationException;
+import exceptions.LoginServiceException;
 import exceptions.SchemaInitializerException;
+import http.IndexHandler;
 import http.Route;
 import http.Router;
 import http.VulnaHttpServer;
 
-import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws Exception, SchemaInitializerException {
+    public static void main(String[] args) throws Exception, SchemaInitializerException, LoginServiceException {
         // configs
         Configuration appConfig   = ConfigurationLoader.load("application.properties");
         Configuration loginConfig = ConfigurationLoader.load("challenges/login/challenge.properties");
@@ -32,7 +32,7 @@ public class Main {
 
         // routing
         Router router = new Router();
-//        router.register(new Route("/",      new IndexHandler()));
+        router.register(new Route("/",      new IndexHandler()));
         router.register(new Route("/login", loginHandler));
 
         // server

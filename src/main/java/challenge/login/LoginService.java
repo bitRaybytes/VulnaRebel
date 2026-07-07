@@ -8,7 +8,13 @@ import java.sql.SQLException;
 public class LoginService {
     private final DatabaseManager manager;
 
-    public LoginService(DatabaseManager manager) {
+    public LoginService(DatabaseManager manager) throws LoginServiceException {
+        if (manager== null){
+            throw new LoginServiceException(
+                    getClass().getName() +
+                            ": DatabaseManager cannot be null."
+            );
+        }
         this.manager = manager;
     }
 

@@ -31,7 +31,7 @@ public class Route {
     private void validateHandler(HttpHandler handler){
         if (handler == null){
             throw new RouteException(
-                    Route.class.getName() +
+                    getClass().getName() +
                             ": HttpHandler cannot be null.");
         }
     }
@@ -39,12 +39,12 @@ public class Route {
     private void validatePath(String path){
         if (path == null){
             throw new RouteException(
-                    Route.class.getName() +
+                    getClass().getName() +
                             ": Path cannot be null.");
         }
         if (path.isBlank()){
             throw new RouteException(
-                    Route.class.getName() +
+                    getClass().getName() +
                             ": Path cannot be empty.");
         }
     }

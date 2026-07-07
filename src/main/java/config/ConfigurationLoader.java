@@ -18,22 +18,29 @@ public class ConfigurationLoader {
         ){
             if (in == null){
                 throw new ConfigurationLoaderException(
-                        "Configure file '" + classpathResource + "' not found.");
+                        ConfigurationLoader.class.getName()+
+                                ": Configure file '" + classpathResource + "' not found.");
             }
             properties.load(in);
             return new Configuration(properties);
         } catch (IOException e) {
-            throw new RuntimeException("Failure in InputStream occurred ",e);
+            throw new ConfigurationLoaderException(
+                    ConfigurationLoader.class.getName()+
+                            ": Failure in InputStream occurred ",e);
         }
     }
 
     private static void validateResource(String classpathResource){
         if (classpathResource == null){
-            throw new ConfigurationLoaderException("Classpath to resource file cannot be null.");
+            throw new ConfigurationLoaderException(
+                    ConfigurationLoader.class.getName()+
+                            ": Classpath to resource file cannot be null.");
         }
 
         if (classpathResource.isBlank()){
-            throw new ConfigurationLoaderException("Classpath to resource file cannot be empty or blank.");
+            throw new ConfigurationLoaderException(
+                    ConfigurationLoader.class.getName()+
+                            "Classpath to resource file cannot be empty or blank.");
         }
     }
 }

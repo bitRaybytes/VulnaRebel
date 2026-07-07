@@ -17,11 +17,15 @@ public class Configuration {
 
     public Configuration(Properties properties){
         if (properties == null){
-            throw new ConfigurationException(Configuration.class.getName()+": Property might be null.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Property might be null.");
         }
 
         if (properties.isEmpty()){
-            throw new ConfigurationException(Configuration.class.getName()+": Property might be empty.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Property might be empty.");
         }
         this.properties = properties;
     }
@@ -36,7 +40,9 @@ public class Configuration {
         try {
             return Integer.parseInt(properties.getProperty(key));
         }catch (NumberFormatException e){
-            throw new ConfigurationException(Configuration.class.getName()+": Configuration property '" + key + "' must be a valid integer.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Configuration property '" + key + "' must be a valid integer.");
         }
     }
 
@@ -47,18 +53,24 @@ public class Configuration {
 
     private void validateKey(String key){
         if (key == null){
-            throw new ConfigurationException(Configuration.class.getName()+": Configuration string cannot be null.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Configuration string cannot be null.");
         }
 
         if (key.isBlank()){
-            throw new ConfigurationException(Configuration.class.getName()+": Configuration string cannot be empty or blank.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Configuration string cannot be empty or blank.");
         }
         validatePropertyKey(key);
     }
 
     private void validatePropertyKey(String key) {
         if (!properties.containsKey(key)){
-            throw new ConfigurationException(Configuration.class.getName()+": Missing configuration key: '" + key + "' not exist.");
+            throw new ConfigurationException(
+                    getClass().getName() +
+                            ": Missing configuration key: '" + key + "' not exist.");
         }
     }
 

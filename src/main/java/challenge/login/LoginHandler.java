@@ -17,6 +17,7 @@ public class LoginHandler extends BaseHandler {
     private final Configuration challengeConfig;
 
     public LoginHandler(LoginService service, Configuration challengeConfig) {
+        validate(service, challengeConfig);
         this.service = service;
         this.challengeConfig = challengeConfig;
     }
@@ -50,6 +51,21 @@ public class LoginHandler extends BaseHandler {
             throw new LoginHandlerException(
                     LoginHandler.class.getName()+
                             ": Failure occurred during database connection. ", e
+            );
+        }
+    }
+
+    private void validate(LoginService service, Configuration challengeConfig){
+        if (service ==null){
+            throw new LoginHandlerException(
+                    getClass().getName() +
+                            ": LoginService cannot be null,"
+            );
+        }
+        if (challengeConfig ==null){
+            throw new LoginHandlerException(
+                    getClass().getName() +
+                            ": Challenge's config cannot be null."
             );
         }
     }

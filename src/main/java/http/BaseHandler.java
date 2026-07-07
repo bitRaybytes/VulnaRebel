@@ -24,7 +24,6 @@ public abstract class BaseHandler implements HttpHandler {
 
     @Override
     public final void handle(HttpExchange exchange) throws IOException {
-        validateExchange(exchange);
         try {
             if ("GET".equals(exchange.getRequestMethod())) {
                 doGet(exchange);
@@ -104,7 +103,6 @@ public abstract class BaseHandler implements HttpHandler {
     protected Map<String,String> parseFormBody(String body){
         validateBody(body);
         Map<String, String> form = new HashMap<>();
-
 
         String[] pairs = body.split("&");
         for (String pair: pairs){
