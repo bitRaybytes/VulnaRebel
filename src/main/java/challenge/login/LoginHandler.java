@@ -24,7 +24,7 @@ public class LoginHandler extends BaseHandler {
 
     @Override
     protected void doGet(HttpExchange exchange) throws IOException {
-        byte[] html = readResource("/static/login.html");
+        byte[] html = readResource("/static/challenges/login/login.html");
         sendResponse(exchange, 200, TEXT_HTML, html);
     }
 
