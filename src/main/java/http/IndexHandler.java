@@ -10,7 +10,7 @@ public class IndexHandler extends BaseHandler{
     protected void doGet(HttpExchange exchange) throws IOException {
         byte[] html = readResource("static/index.html");
 //        exchange.getResponseHeaders().set("Location", "/");
-//        exchange.sendResponseHeaders(302, -1);
+//        exchange.sendResponseHeaders(302, 0);
         sendResponse(exchange,200,TEXT_HTML, html);
     }
 }
