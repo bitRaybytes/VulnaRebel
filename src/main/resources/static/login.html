@@ -5,6 +5,11 @@
     <title>VulnaRebel — Login Challenge</title>
 </head>
 <style>
+    h1,h2{
+        display:flex;
+        justify-content:center;
+        align-text:center;
+    }
     .formwrapper{
         display:flex;
         justify-content:center;
@@ -14,17 +19,20 @@
     input{
         font-size:16px;
         height:35px;
-
     }
+    #forgotPw{display:none;}
+    #forgotPw:target{display:block;}
 </style>
 <body>
-<h1>Welcome to VulnaRebel</h1>
-<h2>Please log in to chat with users</h2>
+<h1>Welcome to the first challenge.</h1>
+<h2>Login the right way to reveal the flag.</h2>
 <div class="formwrapper">
     <form action="/login" method="post">
         <input type="text"     name="username" placeholder="Username"><br>
         <input type="password" name="password" placeholder="Password"><br>
         <input type="submit"   value="Login">
+        <a href="#forgotPw">Forgot password?</a>
+        <p id="forgotPw">Find another way around. 😉</p>
     </form>
 </div>
 
