@@ -28,6 +28,13 @@ public class SchemaInitializer {
     }
 
     public void initialize(String challengeName) throws SchemaInitializerException {
+        if (challengeName == null || challengeName.isBlank()){
+            throw new SchemaInitializerException(
+                    SchemaInitializer.class.getName() +
+                            ": Given parameter cannot be null."
+            );
+        }
+
         try (Connection conn = manager.getConnection()) {
             executeSqlFile(conn, "challenges/" + challengeName + "/schema.sql");
             executeSqlFile(conn, "challenges/" + challengeName + "/seed.sql");
@@ -41,7 +48,8 @@ public class SchemaInitializer {
     private void executeSqlFile(Connection conn, String path) throws SchemaInitializerException {
         try (InputStream is = SchemaInitializer.class.getResourceAsStream("/" + path)) {
 
-            if (is == null) throw new SchemaInitializerException("Resource not found: " + path);
+            if (is == null) throw new SchemaInitializerException(
+                    SchemaInitializer.class.getName() + ": Resource not found: " + path);
 
             String content = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
