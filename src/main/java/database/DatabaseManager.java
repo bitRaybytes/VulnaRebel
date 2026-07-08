@@ -10,11 +10,6 @@ import java.util.logging.Logger;
 
 /// This class provides a database connection.</br>
 /// It is recommended to call a connection in a try-with-resources block.
-/// </br></br>
-/// f.e:</br>
-/// `try (Connection conn = databaseManager.getConnection()){
-///     // here you can use conn
-/// }`
 public class DatabaseManager {
     private static final Logger LOGGER = Logger.getLogger(DatabaseManager.class.getName());
 
