@@ -16,6 +16,7 @@ Run locally only. Never expose to a public network.
   * [Technology Stack](#technology-stack)
   * [Educational Purpose](#educational-purpose)
   * [Roadmap](#roadmap)
+  * [Screenshots](#screenshots)
   * [Contributing](#contributing)
   * [License](#license)
 
@@ -62,6 +63,7 @@ Current implementation includes:
 - Configuration system using `application.properties`
 - Database connection management `DatabaseManager`
 - Modular project architecture prepared for future challenge modules
+- First Login SQLI Challenge
 
 ## Planned Challenges
 
@@ -126,14 +128,28 @@ Do not expose VulnaRebel to public networks or production environments.
 - Routing system
 - Database connection management
 - Docker environment
+- SQL Injection login challenge
 
 ### In Progress
-- SQL Injection login challenge
+- Html refinements
 
 ### Planned
 - Challenge validation
 - Blind SQL Injection
 - Additional vulnerability categories
+
+## Screenshots
+### Dashboard
+![](/Docs/screenshots/VWA_Dashboard.png)
+
+### Login SQLi Challenge - Main
+![](/Docs/screenshots/VWA_Login_Challenge.png)
+
+### Login SQLi Challenge - Failed Attempt
+![](/Docs/screenshots/VWA_failedAttempt.png)
+
+### Login SQLi Challenge - Revealed flag
+![](/Docs/screenshots/VWA_Flag.png)
 
 ## Contributing
 
