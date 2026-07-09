@@ -110,8 +110,9 @@ public abstract class BaseHandler implements HttpHandler {
 
             // edge case for malformed pairs with no "="
             if (parts.length == 2){
+                String key = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
                 String value = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
-                form.put(parts[0],value);
+                form.put(key,value);
             }else {
                 throw new BaseHandlerException(BaseHandler.class.getName()
                         + ": There is no pair for: "+ Arrays.toString(parts));
