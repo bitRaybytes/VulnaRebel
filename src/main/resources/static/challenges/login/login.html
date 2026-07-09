@@ -3,38 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <title>VulnaRebel — Login Challenge</title>
-</head>
-<style>
-    h1,h2{
-        display:flex;
-        justify-content:center;
-        align-text:center;
-    }
-    .formwrapper{
-        display:flex;
-        justify-content:center;
-        align-text:center;
-        min-height: 250px;
-    }
-    input{
-        font-size:16px;
-        height:35px;
-    }
-    #forgotPw{display:none;}
-    #forgotPw:target{display:block;}
-</style>
-<body>
-<h1>Welcome to the first challenge.</h1>
-<h2>Login the right way to reveal the flag.</h2>
-<div class="formwrapper">
-    <form action="/login" method="post">
-        <input type="text"     name="username" placeholder="Username"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="submit"   value="Login">
-        <a href="#forgotPw">Forgot password?</a>
-        <p id="forgotPw">Find another way around. 😉</p>
-    </form>
-</div>
+    <style>
+        body{
+            margin:0;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        nav{display:flex; justify-content:center;}
+        nav>ul>li{list-style:none;}
+        h1,h2{
+            display:flex;
+            justify-content:center;
+            text-align:center;
+        }
+        .innerFormWrapper{
+            display:block;
+            justify-content:center;
+            min-height: 150px;
+            min-width: 500px;
+        }
+        .formWrapper{
+            display:flex;
+            justify-content:space-evenly;
+        }
+        form{
+        padding:10px;
+            border:1px solid grey;
+            border-radius:15px;
+            box-shadow: 0 0 0.25em 0.25em rgba(0, 0, 0, 0.15);
+        }
+        form>input{
 
+            display:block;
+            font-size:16px;
+            height:35px;
+            width:250px;
+            margin: 10px 0;
+        }
+        .btnwrapper{display:flex;justify-content:space-evenly;}
+        .btnwrapper>.button{
+            width:100px;
+            height:25px;
+            background-color:lightgray;
+        }
+        .button:hover{background-color:green; color:white;}
+        .reset:hover{background-color:red;}
+        .challengeHints{
+            display:flex;
+            justify-content:center;
+            width:500px;
+            min-height:200px;
+            position: relative;
+            margin:10px 0px;
+        }
+        .hintsWrapper{font-size: 18px; text-align: center; width: 100%;}
+        .outerFormWrapper{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            width:100%;
+            padding; 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul style="display:flex; width:100%; justify-content:space-evenly;" >
+            <li><a href="/">Challenges</a></li>
+            <li><a href="#">Resources</a></li>
+        </ul>
+    </nav>
+    <h1>Welcome to the first challenge.</h1>
+    <h2>Login to reveal the flag.</h2>
+    <div class="outerFormWrapper" >
+        <div class="innerFormWrapper">
+            <div class="formWrapper">
+                <form action="/login" method="post">
+                    <input type="text"     name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <div class="btnwrapper">
+                        <input type="submit"   class="button login"  value="login">
+                        <input type="reset" class="button reset" value="reset fields">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="challengeHints">
+            <div  class="hintsWrapper">
+                <a href="#" id="toggleForgot">Forgot password?</a>
+                <a href="#" id="toggleOff" style="margin-left:25px;">reset</a>
+                <p id="forgotPw" style="display:none">
+                    Find another way around. 😉
+                    <a href="#" id="toggleHint">Need a hint?</a>
+                </p>
+                <p id="hint" style="display:none">
+                    Think about escaping the syntax<br>
+                    <a href="#" id="toggleMoreHint">More hints?</a>
+                </p>
+                <p id="moreHint" style="display:none">
+                    Let's suppose that this is a legitimate SaaS plattform where you have a valid profile.<br>
+                    Then there must be a query behind this form. <br>
+                    <a href="#" id="toggleLastHint">Need one last more hint?</a>
+                </p>
+                <p id="lastHint" style="display:none">
+                    So a database query to this specific login form and architecture will be something close to this: <br>
+                    <code>SELECT * FROM login_users WHERE username&nbsp;=&nbsp;'YourUsername' AND password&nbsp;=&nbsp;'YourSuperSecretPassword';</code>
+                    <br>So the question is: how can you escape this?
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('toggleForgot').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('forgotPw').style.display = 'block';
+            });
+
+            document.getElementById('toggleOff').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('forgotPw').style.display = 'none';
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+
+            document.getElementById('toggleHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'block';
+                document.getElementById('forgotPw').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+
+            document.getElementById('toggleMoreHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'block';
+            });
+
+            document.getElementById('toggleLastHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>
