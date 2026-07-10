@@ -100,7 +100,14 @@ public abstract class BaseHandler implements HttpHandler {
         }
     }
 
-    protected Map<String,String> parseFormBody(String body){
+    /**
+     * This method parses the body of a request<br>
+     * To read the body it is recommended to use the {@link BaseHandler} readBody() method.<br>
+     * @param body the body which contains the payload
+     * @return java.util.Map
+     * @throws BaseHandlerException
+     * */
+    protected Map<String,String> parseUrlEncodedData(String body){
         validateBody(body);
         Map<String, String> form = new HashMap<>();
 
