@@ -2,6 +2,7 @@ package core;
 
 import challenge.login.LoginHandler;
 import challenge.login.LoginService;
+import challenge.reflectedxss.ReflectedXssHandler;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
@@ -30,10 +31,15 @@ public class Main {
         LoginService loginService = new LoginService(dbManager);
         LoginHandler loginHandler = new LoginHandler(loginService, loginConfig);
 
-        // routing
+        // TODO: Optional - for later:
+        // Idea for a challenge abstraction.
+        // But overloading a constructor would be difficult
+        // to maintain and also there are challenges that do
+        // not rely on a database at all like XSS routing
         Router router = new Router();
         router.register(new Route("/",      new IndexHandler()));
         router.register(new Route("/login", loginHandler));
+        router.register(new Route("/reflectedxss", new ReflectedXssHandler()));
 
         // server
         VulnaHttpServer server = new VulnaHttpServer(appConfig);
