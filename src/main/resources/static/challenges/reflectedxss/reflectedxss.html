@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VulnaRebel - Reflected XSS</title>
+    <style>
+        *{
+            font-family:helvetica;
+            margin:0;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1,h2{
+            display:flex;
+            justify-content:center;
+            text-align:center;
+            margin: 15px 0;
+        }
+        .challengeHints{
+            display:flex;
+            justify-content:center;
+            width:100%;
+            margin:15px;
+        }
+
+    </style>
+    <script>
+        window.appState = {
+            ui: {
+                theme: "dark"
+            },
+            search: {
+                history: []
+            },
+            developer: {
+                debugMode: false,
+                featureFlags: {
+                    betaSearch: true
+                }
+            },
+            internal: {
+                build: "1.2.4",
+                apiRevision: "v2",
+                deploymentKey: "ctf{Reflected_XSS_Completed}"
+            }
+        };
+    </script>
+</head>
+<body>
+    <nav style="display:flex; flex-direction:row; align-items:center;">
+        <div style="margin:0 10px; width:120px; height:100%;"><b>VulnaRebel</b></div>
+        <ul style="display:flex; width:100%; align-items:center; justify-content:space-evenly;
+                   min-height:40px; list-style:none;" >
+            <li><a href="/">Challenges</a></li>
+            <li><a href="#">Resources</a></li>
+        </ul>
+    </nav>
+    <h1>Reflected XSS Challenge</h1>
+    <h2>The search functionality might contain unexpected behavior.</h2>
+    <div style="display:flex; justify-content:center; align-items:center;">
+        <div style="
+                margin:10px; width:420px;">
+            <div style="width:400px; margin:10px; border-radius:10px; border: 4px solid #2E7D32;
+                    background-color:#212121; color:white;">
+                <div style="margin: 15px 10px;"><p><strong>Difficulty:</strong> <span style="color:#2E7D32;"><strong>Easy</strong></span></p></div>
+                <div style="margin: 15px 10px;">
+                    <p>
+                        <strong>Objective:</strong><br>
+                        Investigate the search functionality for client-side security issues.
+                        If you discover sensitive information, report the exposed value.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:flex; justify-content:center;">
+        <form action="/reflectedxss" method="get">
+            <input style="width:300px; height:35px; font-size:16px;" type="search" name="query" placeholder="Search..."  >
+            <input style="width:75px; height:35px; font-size:16px;" type="submit" value="search">
+        </form>
+    </div>
+    <div style="display:flex; justify-content:center; margin: 20px;" id="searchResult" >
+        {{query}}
+    </div>
+    <div class="challengeHints">
+        <div style="height:200px; width:500px; display:flex; flex-direction:column; align-items: center;">
+            <div style="margin:10px 0;">
+                <a href="#" id="toggleHint">Hints</a>
+                <a href="#" id="toggleOff" style="margin-left:25px;">reset</a>
+            </div>
+            <div  class="hintsWrapper" style="margin:25px;">
+                <p id="hint" style="display:none">
+                    Look carefully at what happens to your search term after you submit it.<br>
+                    <a href="#" id="toggleMoreHint">More hints?</a>
+                </p>
+                <p id="moreHint" style="display:none">
+                    The browser does not only display content. It also interprets HTML elements contained inside responses.<br>
+                    <a href="#" id="toggleLastHint">Need one last more hint?</a>
+                </p>
+                <p id="lastHint" style="display:none">
+                    The interesting part of this challenge happens inside the browser, not inside the backend.
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('toggleHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'block';
+            });
+
+            document.getElementById('toggleMoreHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'block';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+
+
+            document.getElementById('toggleLastHint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'block';
+            });
+
+
+            document.getElementById('toggleOff').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
