@@ -31,7 +31,7 @@ public class LoginHandler extends BaseHandler {
     @Override
     protected void doPost(HttpExchange exchange) throws IOException {
         String body = readBody(exchange);
-        Map<String, String> pairs = parseFormBody(body);
+        Map<String, String> pairs = parseUrlEncodedData(body);
 
         try {
             boolean attempt = service.attemptLogin(
