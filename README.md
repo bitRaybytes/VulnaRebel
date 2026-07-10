@@ -1,3 +1,26 @@
+```text
+██╗   ██╗██╗   ██╗██╗     ███╗   ██╗ █████╗ ██████╗ ███████╗██████╗ ███████╗██╗
+██║   ██║██║   ██║██║     ████╗  ██║██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝██║
+██║   ██║██║   ██║██║     ██╔██╗ ██║███████║██████╔╝█████╗  ██████╔╝█████╗  ██║
+╚██╗ ██╔╝██║   ██║██║     ██║╚██╗██║██╔══██║██╔══██╗██╔══╝  ██╔══██╗██╔══╝  ██║
+ ╚████╔╝ ╚██████╔╝███████╗██║ ╚████║██║  ██║██║  ██║███████╗██████╔╝███████╗███████╗
+  ╚═══╝   ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝╚══════╝
+```
+
+```text
+There are many ways to spell its name...
+
+ASCII
+86 117 108 110 97 82 101 98 101 108
+
+Binary
+01010110 01110101 01101100 01101110 01100001 
+01010010 01100101 01100010 01100101 01101100
+
+Hexadecimal
+56 75 6C 6E 61 52 65 62 65 6C
+```
+
 # VulnaRebel – A Portable Web Security Training Platform
 
 ⚠️ WARNING: VulnaRebel contains intentionally vulnerable code.   
@@ -167,7 +190,15 @@ Do not expose VulnaRebel to public networks or production environments.
 
 </details>
 
+## Developer Notes
 
+Most users only read documentation.
+
+Security professionals inspect everything.
+
+```
+RmxhZzogY3Rme1JFQURNRV9FeHBsb3Jlcl9TdGF5X0N1cmlvdXN9
+```
 
 ## Contributing
 
