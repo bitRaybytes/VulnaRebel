@@ -12,11 +12,11 @@ import java.util.Map;
 /// Handles the authentication logic for the SQL Injection login challenge.
 /// Deliberately uses string concatenation instead of PreparedStatement
 /// to demonstrate SQL injection vulnerability.
-public class LoginHandler extends BaseHandler {
+public class LoginSqliHandler extends BaseHandler {
     private final LoginService service;
     private final Configuration challengeConfig;
 
-    public LoginHandler(LoginService service, Configuration challengeConfig) {
+    public LoginSqliHandler(LoginService service, Configuration challengeConfig) {
         validate(service, challengeConfig);
         this.service = service;
         this.challengeConfig = challengeConfig;
@@ -49,7 +49,7 @@ public class LoginHandler extends BaseHandler {
             sendResponse(exchange,500, TEXT_PLAIN,"Something went wrong.");
         } catch (LoginServiceException e) {
             throw new LoginHandlerException(
-                    LoginHandler.class.getName()+
+                    LoginSqliHandler.class.getName()+
                             ": Failure occurred during database connection. ", e
             );
         }

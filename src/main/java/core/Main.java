@@ -1,6 +1,6 @@
 package core;
 
-import challenge.login.LoginHandler;
+import challenge.login.LoginSqliHandler;
 import challenge.login.LoginService;
 import challenge.reflectedxss.ReflectedXssHandler;
 import config.Configuration;
@@ -29,7 +29,7 @@ public class Main {
 
         // challenges
         LoginService loginService = new LoginService(dbManager);
-        LoginHandler loginHandler = new LoginHandler(loginService, loginConfig);
+        LoginSqliHandler loginHandler = new LoginSqliHandler(loginService, loginConfig);
 
         // TODO: Optional - for later:
         // Idea for a challenge abstraction.
