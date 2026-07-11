@@ -1,4 +1,4 @@
-package challenge.login;
+package challenge.loginsqli;
 
 import com.sun.net.httpserver.HttpExchange;
 import config.Configuration;

@@ -1,7 +1,7 @@
 package core;
 
-import challenge.login.LoginSqliHandler;
-import challenge.login.LoginService;
+import challenge.loginsqli.LoginSqliHandler;
+import challenge.loginsqli.LoginService;
 import challenge.reflectedxss.ReflectedXssHandler;
 import config.Configuration;
 import config.ConfigurationLoader;

@@ -1,4 +1,4 @@
-package challenge.login;
+package challenge.loginsqli;
 
 import database.DatabaseManager;
 import exceptions.LoginServiceException;
