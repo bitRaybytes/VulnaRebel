@@ -5,10 +5,10 @@ import exceptions.LoginServiceException;
 
 import java.sql.SQLException;
 
-public class LoginService {
+public class LoginSqliService {
     private final DatabaseManager manager;
 
-    public LoginService(DatabaseManager manager) throws LoginServiceException {
+    public LoginSqliService(DatabaseManager manager) throws LoginServiceException {
         if (manager== null){
             throw new LoginServiceException(
                     getClass().getName() +
@@ -40,7 +40,7 @@ public class LoginService {
             return rs.next();
         } catch (SQLException e) {
             throw new LoginServiceException(
-                    LoginService.class.getName() +
+                    LoginSqliService.class.getName() +
                             ": SQL query failure.",e);
         }
     }
