@@ -1,7 +1,7 @@
 package core;
 
 import challenge.loginsqli.LoginSqliHandler;
-import challenge.loginsqli.LoginService;
+import challenge.loginsqli.LoginSqliService;
 import challenge.reflectedxss.ReflectedXssHandler;
 import config.Configuration;
 import config.ConfigurationLoader;
@@ -28,7 +28,7 @@ public class Main {
         new SchemaInitializer(dbManager, loginConfig).initialize("login");
 
         // challenges
-        LoginService loginService = new LoginService(dbManager);
+        LoginSqliService loginService = new LoginSqliService(dbManager);
         LoginSqliHandler loginHandler = new LoginSqliHandler(loginService, loginConfig);
 
         // TODO: Optional - for later:

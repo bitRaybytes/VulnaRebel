@@ -13,10 +13,10 @@ import java.util.Map;
 /// Deliberately uses string concatenation instead of PreparedStatement
 /// to demonstrate SQL injection vulnerability.
 public class LoginSqliHandler extends BaseHandler {
-    private final LoginService service;
+    private final LoginSqliService service;
     private final Configuration challengeConfig;
 
-    public LoginSqliHandler(LoginService service, Configuration challengeConfig) {
+    public LoginSqliHandler(LoginSqliService service, Configuration challengeConfig) {
         validate(service, challengeConfig);
         this.service = service;
         this.challengeConfig = challengeConfig;
@@ -55,7 +55,7 @@ public class LoginSqliHandler extends BaseHandler {
         }
     }
 
-    private void validate(LoginService service, Configuration challengeConfig){
+    private void validate(LoginSqliService service, Configuration challengeConfig){
         if (service ==null){
             throw new LoginHandlerException(
                     getClass().getName() +
