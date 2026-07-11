@@ -3,19 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>VulnaRebel - Vulnerable Web App</title>
+    <style>
+        *{font-family:helvetica; line-height:1.5;}
+        li{font-size:18px;}
+        body{
+            height:100dvh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+        }
+        a{text-decoration:none; color:black;},
+        a:hover{text-decoration:underline; color:blue;}
+        .challengeLink{
+            text-align:center;
+            font-weight:bold;
+            margin:10px 0;
+            font-size:18px;
+            background-color:lightgrey;
+            padding:10px;
+            border-radius:10px;
+            border-shadow:5px black;
+            width:250px;
+        }
+
+        .challengeLink:hover{background-color:grey;}
+    </style>
 </head>
-<style>
-    li{font-size:18px;}
-</style>
 <body>
-    <h1>Welcome to VulnaRebel</h1>
-    <h2>The most <span style="font-size:12px;">(un)</span>secure web application on the planet.</h2>
-    <div style="height:75dvh">
-        <p style="font-size:18px;">Choose a challenge:</p>
-        <ul style="font-size:18px;">
-            <li><a href="/login">Login SQL Injection (easy)</a></li>
-            <li><a href="/reflectedxss">Reflected XSS (easy)</a></li>
+    <nav style="display:flex; justify-content:center; align-items:center;">
+        <div style="margin:0 10px; width:120px; height:100%; display:flex; align-items:center; "><b><a href="/">VulnaRebel</a></b></div>
+        <ul style="display:flex; width:100%; align-items:center; justify-content:space-evenly;
+                       min-height:40px; list-style:none;" >
+            <li><a href="#">Resources (in progress)</a></li>
         </ul>
+    </nav>
+    <h1>Welcome to VulnaRebel</h1>
+    <h2 style=" width:500px; text-align:center;">The most <span style="font-size:12px;">(un)</span>secure web application on the planet.</h2>
+
+    <div style="display:flex; align-items:center;">
+        <div style="">
+            <div style="width:500px; margin:20px; border-radius:15px; border: 4px solid grey;
+                    background-color:#212121; color:white;">
+                <div style="margin: 15px 15px;"><p><strong>Difficulty:</strong> <span style="color:white;"><strong>vary</strong></span></p></div>
+                <div style="display:flex;">
+                    <div style="font-weight:bold; display:flex;align-items:center;justify-content:center; border-radius:5px; padding:5px; width:90px; margin:15px; background-color:#2E7D32; ">easy</div>
+                    <div style="font-weight:bold; display:flex;align-items:center;justify-content:center; border-radius:5px; padding:5px; width:90px; margin:15px; background-color:#EF6C00; ">medium</div>
+                    <div style="font-weight:bold; display:flex;align-items:center;justify-content:center; border-radius:5px; padding:5px; width:90px; margin:15px; background-color:#C62828; ">hard</div>
+                    <div style="font-weight:bold; display:flex;align-items:center;justify-content:center; border-radius:5px; padding:5px; width:90px; margin:15px; background-color:#6A1B9A; ">expert</div>
+                </div>
+                <div style="margin: 15px 15px;">
+                    <p >
+                        <strong>Objective:</strong><br>
+                        VulnaRebel is a deliberately vulnerable web application designed for learning and practicing
+                        web application security. Each challenge simulates a realistic vulnerability and has one
+                        objective: capture the hidden flag (ctf{...}), which may be located on either the client
+                        side or the server side.<br><br>
+
+                        If you get stuck, a built-in hint system is available to guide you. Before revealing the
+                        next hint, try to investigate the behavior yourself and research the underlying vulnerability
+                        using your preferred search engine. Understanding why an attack works is more valuable than
+                        simply finding the flag.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div style="display:flex; flex-direction:column; align-items:center; width:430px;
+                    background-color:grey; padding:40px; border-radius:15px;">
+            <h3 style="font-size:20px;">Choose a challenge:</h3>
+            <a class="challengeLink" href="/login" style="">Login SQL Injection (easy)</a>
+            <a class="challengeLink" href="/reflectedxss" style="">Reflected XSS (easy)</a>
+        </div>
     </div>
     <footer>
         <p>Made with love ❤</p>
