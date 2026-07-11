@@ -1,12 +1,12 @@
 package core;
 
-import challenge.loginsqli.LoginSqliHandler;
-import challenge.loginsqli.LoginSqliService;
-import challenge.reflectedxss.ReflectedXssHandler;
+import challenge.Challenge;
+import challenge.loginsqli.LoginSqliChallenge;
+import challenge.reflectedxss.ReflectedXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import database.SchemaInitializer;
+import exceptions.ChallengeException;
 import exceptions.LoginServiceException;
 import exceptions.SchemaInitializerException;
 import http.IndexHandler;
@@ -16,30 +16,24 @@ import http.VulnaHttpServer;
 
 
 public class Main {
-    public static void main(String[] args) throws Exception, SchemaInitializerException, LoginServiceException {
+    public static void main(String[] args) throws Exception, SchemaInitializerException, LoginServiceException, ChallengeException {
         // configs
-        Configuration appConfig   = ConfigurationLoader.load("application.properties");
-        Configuration loginConfig = ConfigurationLoader.load("challenges/login/challenge.properties");
+        Configuration appConfig          = ConfigurationLoader.load("application.properties");
+        Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/login/challenge.properties");
+        Configuration reflectedXssConfig = ConfigurationLoader.load("challenges/reflectedxss/challenge.properties");
 
         // database
         DatabaseManager dbManager = new DatabaseManager(appConfig);
 
-        // schema
-        new SchemaInitializer(dbManager, loginConfig).initialize("login");
-
         // challenges
-        LoginSqliService loginService = new LoginSqliService(dbManager);
-        LoginSqliHandler loginHandler = new LoginSqliHandler(loginService, loginConfig);
+        Challenge loginSqli     = new LoginSqliChallenge(loginSqliConfig,dbManager);
+        Challenge reflextedXss  = new ReflectedXssChallenge(reflectedXssConfig);
 
-        // TODO: Optional - for later:
-        // Idea for a challenge abstraction.
-        // But overloading a constructor would be difficult
-        // to maintain and also there are challenges that do
-        // not rely on a database at all like XSS routing
+        // Router
         Router router = new Router();
-        router.register(new Route("/",      new IndexHandler()));
-        router.register(new Route("/login", loginHandler));
-        router.register(new Route("/reflectedxss", new ReflectedXssHandler()));
+        router.register(new Route("/", new IndexHandler()));
+        router.register(loginSqli.route());
+        router.register(reflextedXss.route());
 
         // server
         VulnaHttpServer server = new VulnaHttpServer(appConfig);
