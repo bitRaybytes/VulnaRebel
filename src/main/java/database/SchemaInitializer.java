@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /// This class' purpose is to initialize a challenge's table in the database. </br>
-/// It will also read the modules database dummy data in seeds.sql and  </br>
+/// It will also read the modules database dummy data in seeds.sql. </br>
 /// The connection will be established by DatabaseManagers `getConnection()` Method.  </br> </br>
 /// Executes SQL scripts
 public class SchemaInitializer {
