@@ -9,16 +9,20 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-/// This class owns an underlying `HttpServer` lifecycle (create, start, stopp, add contexts).</br>
-/// If calling a `VulnaHttpServer` object the server will get implicitly instantiated.</br>
-
+ /**
+  * This class owns an underlying `HttpServer` lifecycle (create, start, stop, add contexts).</br>
+  * If calling a {@code VulnaHttpServer} object the server will get implicitly instantiated.</br>
+  * */
 public class VulnaHttpServer {
     private static final Logger LOGGER = Logger.getLogger(VulnaHttpServer.class.getName());
     private final int delay;
     private final com.sun.net.httpserver.HttpServer server;
 
 
-    /// @param config provides the configuration properties.
+     /**
+      * @param config challenge-specific configuration
+      * @throws IOException if an {@code config} is null
+      */
     public VulnaHttpServer(Configuration config) throws IOException {
         if (config == null){
             throw new VulnaHttpServerException(
@@ -35,6 +39,9 @@ public class VulnaHttpServer {
         server.setExecutor(Executors.newFixedThreadPool(threads)); // concurrent request handling
     }
 
+     /**
+      * Start the server
+      */
     public void start() {
         if (server == null) {
             throw new VulnaHttpServerException(
@@ -46,19 +53,32 @@ public class VulnaHttpServer {
         LOGGER.info("Server started on port " + server.getAddress().getPort());
     }
 
+     /**
+      * Stops the server, if the server is running.
+      */
     public void stop() {
         if (server != null) {
             server.stop(delay);
         }
     }
 
+     /**
+      * Applies a {@link Router} and extract a {@link Route} object
+      * with router's {@code #getRoutes()} method.
+      * @param router serves the routes
+      */
     public void applyRoutes(Router router) {
         for (Route route : router.getRoutes()) {
             addContext(route.getPath(), route.getHandler());
         }
     }
 
-    private void addContext(String path, HttpHandler handler) {
+     /**
+      * Adds a context to the server.
+      * @param path the path to the resource
+      * @param handler the handler for resolving the address.
+      */
+    public void addContext(String path, HttpHandler handler) {
         if (path == null || path.isBlank()){
             throw new VulnaHttpServerException(
                     getClass().getName() + ": Context path cannot be null."

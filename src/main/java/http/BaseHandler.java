@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/// The `BaseHandler` class is the abstraction of any handler</br>
-/// Every challenge is supposed to have its own Handler extending the `BaseHandler`
+/**
+ * The {@code BaseHandler} class is the abstraction of any handler</br>
+ * Every challenge is supposed to have its own Handler extending the {@code BaseHandler}.
+ */
 
 public abstract class BaseHandler implements HttpHandler {
 
@@ -45,6 +47,13 @@ public abstract class BaseHandler implements HttpHandler {
         sendResponse(exchange, 405, TEXT_HTML,"Method Not Allowed");
     }
 
+    /**
+     * @param exchange the data coming from the web resource
+     * @param statusCode on which status code to serve
+     * @param contentType the type of content to serve
+     * @param body the body to read the html file
+     * @throws IOException if an error occurs
+     */
     protected void sendResponse(HttpExchange exchange,
                                 int statusCode,
                                 String contentType,

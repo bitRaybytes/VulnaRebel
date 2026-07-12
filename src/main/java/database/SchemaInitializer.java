@@ -18,8 +18,11 @@ public class SchemaInitializer {
     private final DatabaseManager manager;
     private final Configuration challengeConfig;
 
-    // TODO: read challenge-specific db settings related to name, multiple queries...
-
+    /**
+     * @param manager to establish the connection
+     * @param challengeConfig
+     * @throws SchemaInitializerException
+     */
     public SchemaInitializer(
             DatabaseManager manager,
             Configuration challengeConfig) throws SchemaInitializerException {
@@ -41,7 +44,7 @@ public class SchemaInitializer {
      * By providing the parameter, this method will resolve to its corresponding directory
      * to load the schema as well as the seed.sql files to instantiate the database table.
      * @param challengeName will resolve its corresponding directory.
-     * @throws SchemaInitializerException
+     * @throws SchemaInitializerException on error
      */
     public void initialize(String challengeName) throws SchemaInitializerException {
         if (challengeName == null || challengeName.isBlank()){

@@ -26,6 +26,10 @@ public class BlindSqliHandler extends BaseHandler {
     private final BlindSqliService service;
     private final Configuration challengeConfig;
 
+    /**
+     * @param service To check user input
+     * @param challengeConfig for challenge-specific configurations
+     */
     public BlindSqliHandler(BlindSqliService service, Configuration challengeConfig) {
         this.service = service;
         this.challengeConfig = challengeConfig;

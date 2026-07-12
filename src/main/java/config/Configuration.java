@@ -3,18 +3,32 @@ package config;
 import exceptions.ConfigurationException;
 import java.util.Properties;
 
-/// This class uses a `ConfigurationLoader` to access the .properties file key value pairs.
-
+/**
+ * Typed accessor for a {@link Properties} object loaded from a
+ * {@code .properties} file.
+ * <p>
+ * Provides {@code getString}, {@code getInt}, and {@code getBoolean}
+ * accessors with built-in key validation. All methods throw
+ * {@link exceptions.ConfigurationException} on missing or malformed keys
+ * rather than returning null or a silent default.
+ * </p>
+ *
+ * <pre>{@code
+ * Configuration config = new Configuration(
+ *     ConfigurationLoader.load("application.properties")
+ * );
+ * int port = config.getInt("server.port");
+ * }</pre>
+ */
 public class Configuration {
 
     private final Properties properties;
 
 
-    /// @param properties - The properties object to read from
-    /// </br>
-    /// Usage: </br>
-    /// Configuration app = new Configuration(ConfigurationLoader.load("configFileName"));
-
+    /**
+     * @param properties the populated {@link Properties} object to wrap
+     * @throws ConfigurationException if {@code properties} is null or empty
+     */
     public Configuration(Properties properties){
         if (properties == null){
             throw new ConfigurationException(
@@ -30,11 +44,27 @@ public class Configuration {
         this.properties = properties;
     }
 
+    /**
+     * Returns the value for the given key as a {@link String}.
+     *
+     * @param key the property key to look up
+     * @return the property value
+     * @throws ConfigurationException if the key is null, blank, or not present
+     */
     public String getString(String key){
         validateKey(key);
         return properties.getProperty(key);
     }
 
+
+    /**
+     * Returns the value for the given key parsed as an {@code int}.
+     *
+     * @param key the property key to look up
+     * @return the property value as an integer
+     * @throws ConfigurationException if the key is missing or the value
+     *                                is not a valid integer
+     */
     public int getInt(String key){
         validateKey(key);
         try {
@@ -46,6 +76,18 @@ public class Configuration {
         }
     }
 
+    /**
+     * Returns the value for the given key parsed as a {@code boolean}.
+     * <p>
+     * Delegates to {@link Boolean#parseBoolean} - only the string
+     * {@code "true"} (case-insensitive) returns {@code true};
+     * all other values return {@code false}.
+     * </p>
+     *
+     * @param key the property key to look up
+     * @return the property value as a boolean
+     * @throws ConfigurationException if the key is null, blank, or not present
+     */
     public boolean getBoolean(String key){
         validateKey(key);
         return Boolean.parseBoolean(properties.getProperty(key));

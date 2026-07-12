@@ -3,16 +3,19 @@ package http;
 import com.sun.net.httpserver.HttpHandler;
 import exceptions.RouteException;
 
-/// This class represents a single path-to-handler mapping.</br>
-
+/**
+ * This class represents a single path-to-handler mapping.
+ */
 public class Route {
     private final HttpHandler handler;
     private final String path;
 
 
-    /// To implement a route, the constructor has to be configured with a path and a HttpHandler
-    /// @param path is the path of the resource.
-    /// @param handler is the HttpHandler which resolve the outcome.
+    /**
+     * To implement a route, the constructor has to be configured with a path and a HttpHandler
+     * @param path is the path of the resource.
+     * @param handler is the HttpHandler which resolve the outcome.
+     */
     public Route(String path, HttpHandler handler) {
         validateHandler(handler);
         validatePath(path);
@@ -20,10 +23,18 @@ public class Route {
         this.handler = handler;
     }
 
+    /**
+     * Returns the handler of the {@code Route} object.
+     * @return {@code handler}
+     */
     public HttpHandler getHandler() {
         return handler;
     }
 
+    /**
+     * Returns the path of the {@code Route} object.
+     * @return
+     */
     public String getPath() {
         return path;
     }

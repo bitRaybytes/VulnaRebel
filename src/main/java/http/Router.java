@@ -5,7 +5,9 @@ import exceptions.RouterException;
 import java.util.ArrayList;
 import java.util.List;
 
-/// This class owns a collection of Route objects
+/**
+ * This class owns a collection of Route objects and registers them.
+ */
 public class Router {
 
     private final List<Route> routes;
@@ -39,6 +41,10 @@ public class Router {
         routes.add(route);
     }
 
+    /**
+     * A list of immutable {@link Route} objects.
+     * @return an immutable {@link List} of {@link Route} objects.
+     */
     public List<Route> getRoutes(){
         return List.copyOf(routes);
     }
