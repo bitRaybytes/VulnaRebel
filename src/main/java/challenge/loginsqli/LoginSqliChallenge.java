@@ -11,18 +11,23 @@ import exceptions.SchemaInitializerException;
 import http.Route;
 
 /**
- * Challenge module: {@code LoginSqliChallenge}
- * Extends base class {@link Challenge} and overloads the {@code initialize()} method to set up a challenge related database table and dummy data.
- * {@link DatabaseManager} is required to initialize.
+ * Challenge module for the SQL Injection topic.
+ * <p>
+ * Extends {@link Challenge} and overrides {@link #initialize()} to create
+ * the {@code login_users} table and seed it with dummy data.<br>
+ * Requires a {@link DatabaseManager} for database initialization
+ * and per-request query execution.
+ * </p>
  */
 public class LoginSqliChallenge extends Challenge {
     private final DatabaseManager dbManager;
 
     /**
-     * A Challenge object related to the SQL-Injection topic.
-     * @param config to load challenge specific configurations
-     * @param dbManager for initializing the database table
-     * @throws ChallengeException if an error occurs.
+     * @param config    the challenge-specific configuration
+     * @param dbManager the database connection factory,
+     *                  required for schema initialization
+     *                  and query execution
+     * @throws ChallengeException if {@code config} is null
      */
     public LoginSqliChallenge(Configuration config, DatabaseManager dbManager) throws ChallengeException {
         super(config);
