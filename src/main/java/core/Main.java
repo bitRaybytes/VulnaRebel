@@ -7,8 +7,6 @@ import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
 import exceptions.ChallengeException;
-import exceptions.LoginServiceException;
-import exceptions.SchemaInitializerException;
 import http.IndexHandler;
 import http.Route;
 import http.Router;
@@ -16,7 +14,7 @@ import http.VulnaHttpServer;
 
 
 public class Main {
-    public static void main(String[] args) throws Exception, SchemaInitializerException, LoginServiceException, ChallengeException {
+    public static void main(String[] args) throws Exception, ChallengeException {
         // configs
         Configuration appConfig          = ConfigurationLoader.load("application.properties");
         Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/login/challenge.properties");
