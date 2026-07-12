@@ -2,16 +2,18 @@ package challenge.loginsqli;
 
 import com.sun.net.httpserver.HttpExchange;
 import config.Configuration;
-import exceptions.LoginHandlerException;
-import exceptions.LoginServiceException;
+import exceptions.LoginSqliHandlerException;
+import exceptions.LoginSqliServiceException;
 import http.BaseHandler;
 
 import java.io.IOException;
 import java.util.Map;
 
-/// Handles the authentication logic for the SQL Injection login challenge.
-/// Deliberately uses string concatenation instead of PreparedStatement
-/// to demonstrate SQL injection vulnerability.
+/**
+ * Handler for {@link LoginSqliChallenge} to handle requests and responses.<br>
+ * Extends {@link BaseHandler}. Does need a {@link LoginSqliService} to manage the authorization and a {@link Configuration}
+ * to load the challenges-specific {@code configuration.properties}.
+ */
 public class LoginSqliHandler extends BaseHandler {
     private final LoginSqliService service;
     private final Configuration challengeConfig;
@@ -47,8 +49,8 @@ public class LoginSqliHandler extends BaseHandler {
 
         } catch (InterruptedException e) {
             sendResponse(exchange,500, TEXT_PLAIN,"Something went wrong.");
-        } catch (LoginServiceException e) {
-            throw new LoginHandlerException(
+        } catch (LoginSqliServiceException e) {
+            throw new LoginSqliHandlerException(
                     LoginSqliHandler.class.getName()+
                             ": Failure occurred during database connection. ", e
             );
@@ -57,13 +59,13 @@ public class LoginSqliHandler extends BaseHandler {
 
     private void validate(LoginSqliService service, Configuration challengeConfig){
         if (service ==null){
-            throw new LoginHandlerException(
+            throw new LoginSqliHandlerException(
                     getClass().getName() +
                             ": LoginService cannot be null,"
             );
         }
         if (challengeConfig ==null){
-            throw new LoginHandlerException(
+            throw new LoginSqliHandlerException(
                     getClass().getName() +
                             ": Challenge's config cannot be null."
             );
