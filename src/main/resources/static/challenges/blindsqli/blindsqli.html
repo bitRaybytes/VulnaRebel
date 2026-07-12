@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VulnaRebel — Blind SQL Injection</title>
+    <style>
+        * { font-family: helvetica; margin: 0; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        h1, h2 { display: flex; justify-content: center; text-align: center; margin: 5px 0; }
+        nav { display: flex; flex-direction: row; align-items: center; }
+        form {
+            padding: 10px;
+            border: 1px solid grey;
+            border-radius: 15px;
+            box-shadow: 0 0 0.25em 0.25em rgba(0,0,0,0.15);
+        }
+        form > input {
+            display: block;
+            font-size: 16px;
+            height: 35px;
+            width: 250px;
+            margin: 10px 0;
+        }
+        .btnwrapper { display: flex; justify-content: space-evenly; }
+        .button { width: 100px; height: 25px; background-color: lightgray; }
+        .button:hover { background-color: green; color: white; }
+        .outerFormWrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .innerFormWrapper { display: block; min-height: 150px; min-width: 500px; }
+        .formWrapper { display: flex; justify-content: space-evenly; }
+        .challengeHints {
+            display: flex;
+            justify-content: center;
+            width: 500px;
+            min-height: 200px;
+            margin: 10px 0;
+        }
+        .hintsWrapper { font-size: 16px; text-align: center; width: 100%; }
+        .submitSection {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .submitSection form {
+            display: inline-block;
+        }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
+    </style>
+</head>
+<body>
+<nav>
+    <div style="margin:0 10px; width:120px;"><b>VulnaRebel</b></div>
+    <ul style="display:flex; width:100%; align-items:center; justify-content:space-evenly;
+               min-height:40px; list-style:none;">
+        <li><a href="/">Challenges</a></li>
+        <li><a href="#">Resources (in progress)</a></li>
+    </ul>
+</nav>
+
+<h1>Blind SQL Injection</h1>
+<h2>Almost silent - but not quite.</h2>
+
+<!-- Objective card -->
+<div style="display:flex; justify-content:center; align-items:center; margin:10px 0;">
+    <div style="width:400px; border-radius:15px; border: 4px solid #EF6C00;
+                background-color:#212121; color:white; padding:15px;">
+        <p><strong>Difficulty:</strong>
+            <span style="color:#EF6C00;"><strong>Medium</strong></span>
+        </p>
+        <br>
+        <p>
+            <strong>Objective:</strong><br>
+            This user search form is connected to a database.
+            It only ever responds with <em>"User found"</em> or <em>"User not found"</em> -
+            nothing more.<br><br>
+            Somewhere in the database is a <strong>secret</strong> column
+            that is never shown to you directly.
+            Your goal is to extract its value one character at a time
+            and submit the flag below.
+        </p>
+    </div>
+</div>
+
+<!-- Search form -->
+<div class="outerFormWrapper">
+    <div class="innerFormWrapper">
+        <div class="formWrapper">
+            <form action="/blindsqli" method="post">
+                <input type="text" name="username" placeholder="Search for user...">
+                <div class="btnwrapper">
+                    <input type="submit" class="button" value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="margin:20px;">
+        {{resultDisplay}}
+    </div>
+
+    <!-- Hints -->
+    <div class="challengeHints">
+        <div class="hintsWrapper">
+            <a href="#" id="openHints">Need a hint?</a>
+            <a href="#" id="toggleOff" style="margin-left:25px;">reset hints</a>
+
+            <p id="hint" style="display:none; margin: 20px 0;">
+                The application only tells you <em>true</em> or <em>false</em>.
+                What if you could turn a SQL query into a yes/no question?<br>
+                <a href="#" id="toggleMoreHint">More hints</a>
+            </p>
+
+            <p id="moreHint" style="display:none; margin: 20px 0;">
+                The query behind this form looks something like:<br>
+                <code>SELECT username FROM blind_users WHERE username = 'your_input'</code><br>
+                It returns nothing visible - just whether a row was found.
+                Can you append a condition that tests a single character?<br>
+                <a href="#" id="toggleLastHint">One more hint</a>
+            </p>
+
+            <p id="lastHint" style="display:none; margin: 20px 0;">
+                Look up <code>SUBSTRING(column, position, 1)</code> in PostgreSQL.<br>
+                If you can make the query return "User found" only when a specific
+                character matches, you can extract the secret one character at a time.<br>
+                Example shape (fill in the blanks):<br>
+                <code>admin' AND SUBSTRING(secret, 1, 1)='?' --</code>
+            </p>
+        </div>
+    </div>
+
+    <!-- Flag submission -->
+    <div class="submitSection">
+        <p style="margin-bottom:10px;">Found the secret? Submit it here:</p>
+        <form action="/blindsqli/submit" method="post">
+            <input type="text" name="flag" placeholder="ctf{...}">
+            <div class="btnwrapper" style="margin-top:5px;">
+                <input type="submit" class="button" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('openHints').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('hint').style.display = 'block';
+        });
+        document.getElementById('toggleOff').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('hint').style.display = 'none';
+            document.getElementById('moreHint').style.display = 'none';
+            document.getElementById('lastHint').style.display = 'none';
+        });
+        document.getElementById('toggleMoreHint').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('hint').style.display = 'none';
+            document.getElementById('moreHint').style.display = 'block';
+        });
+        document.getElementById('toggleLastHint').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('moreHint').style.display = 'none';
+            document.getElementById('lastHint').style.display = 'block';
+        });
+    });
+</script>
+</body>
+</html>
