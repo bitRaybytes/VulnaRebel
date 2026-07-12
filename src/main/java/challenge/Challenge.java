@@ -5,6 +5,8 @@ import exceptions.ChallengeException;
 import exceptions.SchemaInitializerException;
 import http.Route;
 
+import java.util.List;
+
 /**
  * Base abstraction for all VulnaRebel challenge modules.
  * <p>
@@ -52,6 +54,20 @@ public abstract class Challenge {
      * @return the route for this challenge
      */
     public abstract Route route();
+
+    /**
+     * Returns all {@link Route} objects this challenge registers
+     * with the {@link http.Router}.
+     * <p>
+     * The default implementation wraps {@link #route()} in a
+     * single-element list. Challenges requiring multiple routes - such as
+     * {@link challenge.blindsqli.BlindSqliChallenge} - should override this method
+     * instead of {@link #route()}.
+     * </p>
+     *
+     * @return an unmodifiable list of routes for this challenge
+     */
+    public List<Route> routes(){ return List.of(route());}
 
     /**
      * Initializes the database schema and seed data for this challenge.
