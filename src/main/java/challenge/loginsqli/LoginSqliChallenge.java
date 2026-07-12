@@ -12,7 +12,7 @@ import http.Route;
 
 /**
  * Challenge module: {@code LoginSqliChallenge}
- * Extends base class {@link Challenge} and does overload the {@code initialize()} method to set up a challenge related database table and dummy data.
+ * Extends base class {@link Challenge} and overloads the {@code initialize()} method to set up a challenge related database table and dummy data.
  * {@link DatabaseManager} is required to initialize.
  */
 public class LoginSqliChallenge extends Challenge {
