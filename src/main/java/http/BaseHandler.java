@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * The {@code BaseHandler} class is the abstraction of any handler</br>
- * Every challenge is supposed to have its own Handler extending the {@code BaseHandler}.
+ * Every challenge need to have its own Handler extending the {@code BaseHandler}.
  */
 
 public abstract class BaseHandler implements HttpHandler {
@@ -114,7 +114,7 @@ public abstract class BaseHandler implements HttpHandler {
      * To read the body it is recommended to use the {@link BaseHandler} readBody() method.<br>
      * @param body the body which contains the payload
      * @return java.util.Map
-     * @throws BaseHandlerException
+     * @throws BaseHandlerException if no pair is found
      * */
     protected Map<String,String> parseUrlEncodedData(String body){
         validateBody(body);
