@@ -15,7 +15,7 @@ import java.util.Properties;
  *
  * <pre>{@code
  * Configuration config = ConfigurationLoader.load("application.properties");
- * Configuration challenge = ConfigurationLoader.load("challenges/login/challenge.properties");
+ * Configuration challenge = ConfigurationLoader.load("challenges/loginsqli/challenge.properties");
  * }</pre>
  *
  * <p>
@@ -31,7 +31,7 @@ public class ConfigurationLoader {
      *
      * @param classpathResource path to the resource relative to the
      *                          classpath root, e.g.
-     *                          {@code "challenges/login/challenge.properties"}
+     *                          {@code "challenges/loginsqli/challenge.properties"}
      * @return a populated {@link Configuration} instance
      * @throws ConfigurationLoaderException if the resource is null, blank,
      *                                      or not found on the classpath
