@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws Exception, ChallengeException, SchemaInitializerException {
         // configs
         Configuration appConfig          = ConfigurationLoader.load("application.properties");
-        Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/login/challenge.properties");
+        Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/loginsqli/challenge.properties");
         Configuration reflectedXssConfig = ConfigurationLoader.load("challenges/reflectedxss/challenge.properties");
         Configuration blindsqliConfig    = ConfigurationLoader.load("challenges/blindsqli/challenge.properties");
 
