@@ -1,6 +1,9 @@
 package config;
 
 import exceptions.ConfigurationException;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -91,6 +94,24 @@ public class Configuration {
     public boolean getBoolean(String key){
         validateKey(key);
         return Boolean.parseBoolean(properties.getProperty(key));
+    }
+
+    /**
+     * Returns all key-value pairs from this configuration as an
+     * unmodifiable {@link Map}.
+     * <p>
+     * Intended for use by {@link article.TemplateRenderer} to replace
+     * {@code {{key}}} placeholders in HTML templates.
+     * </p>
+     *
+     * @return an unmodifiable map of all property keys and their values
+     */
+    public Map<String, String> asMap(){
+        Map<String, String> entries = new HashMap<>();
+
+        for (Map.Entry<Object, Object> map : properties.entrySet())
+            entries.put(map.getKey().toString(),map.getValue().toString());
+        return Map.copyOf(entries);
     }
 
     private void validateKey(String key){
