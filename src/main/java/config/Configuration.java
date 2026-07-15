@@ -1,6 +1,7 @@
 package config;
 
 import exceptions.ConfigurationException;
+import html.TemplateRenderer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -100,7 +101,7 @@ public class Configuration {
      * Returns all key-value pairs from this configuration as an
      * unmodifiable {@link Map}.
      * <p>
-     * Intended for use by {@link article.TemplateRenderer} to replace
+     * Intended for use by {@link TemplateRenderer} to replace
      * {@code {{key}}} placeholders in HTML templates.
      * </p>
      *
