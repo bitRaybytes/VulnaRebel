@@ -2,7 +2,7 @@ package exceptions;
 
 import java.sql.SQLException;
 
-public class LoginSqliServiceException extends Throwable {
+public class LoginSqliServiceException extends RuntimeException {
     public LoginSqliServiceException(String message) {
         super(message);
     }
