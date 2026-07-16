@@ -2,7 +2,7 @@ package challenge;
 
 import config.Configuration;
 import exceptions.ChallengeException;
-import exceptions.SchemaInitializerException;
+import exceptions.ChallengeException;
 import http.Route;
 
 import java.util.List;
@@ -79,10 +79,10 @@ public abstract class Challenge {
      * rely on this default empty implementation.
      * </p>
      *
-     * @throws SchemaInitializerException if schema or seed
+     * @throws ChallengeException if schema or seed
      *         SQL execution fails
      */
-    public void initialize() throws SchemaInitializerException {
+    public void initialize() throws ChallengeException {
         // intentionally empty — not all challenges require database initialization
     }
 }
