@@ -23,7 +23,7 @@ public class ResourceIndexHandler extends BaseHandler {
     private final List<ArticleCard> cards;
 
     /**
-     * @param cards the list of article cards to render on the index page —
+     * @param cards the list of article cards to render on the index page -
      *              each card links to one resource article
      * @throws IllegalArgumentException if {@code cards} is null
      */
