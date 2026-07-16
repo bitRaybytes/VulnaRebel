@@ -67,7 +67,7 @@ public class Main {
 
         // Router
         Router router = new Router();
-        router.register(new Route("/", new IndexHandler()));
+        router.register(new Route(appConfig.getString("application.indexRoute"), new IndexHandler()));
         router.register(loginSqli.route());
         router.register(reflextedXss.route());
         //registers blindSqli Routes:
