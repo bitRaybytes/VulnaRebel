@@ -10,8 +10,6 @@ import challenge.reflectedxss.ReflectedXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import exceptions.ChallengeException;
-import exceptions.SchemaInitializerException;
 import html.TemplateRenderer;
 import http.IndexHandler;
 import http.Route;
@@ -22,7 +20,7 @@ import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) throws Exception, ChallengeException, SchemaInitializerException {
+    public static void main(String[] args) throws Exception {
         // configs
         Configuration appConfig          = ConfigurationLoader.load("application.properties");
         Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/loginsqli/challenge.properties");
