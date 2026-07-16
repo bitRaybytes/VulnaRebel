@@ -7,7 +7,6 @@ import database.SchemaInitializer;
 import exceptions.ChallengeException;
 import exceptions.LoginSqliHandlerException;
 import exceptions.LoginSqliServiceException;
-import exceptions.SchemaInitializerException;
 import http.Route;
 
 /**
