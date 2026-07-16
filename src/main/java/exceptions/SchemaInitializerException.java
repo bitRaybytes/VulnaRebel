@@ -2,7 +2,7 @@ package exceptions;
 
 import java.sql.SQLException;
 
-public class SchemaInitializerException extends Throwable {
+public class SchemaInitializerException extends RuntimeException {
     public SchemaInitializerException(String message) {
         super(message);
     }
@@ -11,7 +11,4 @@ public class SchemaInitializerException extends Throwable {
         super(message,e);
     }
 
-    public SchemaInitializerException(Throwable e) {
-        super(e);
-    }
 }
