@@ -82,7 +82,7 @@ public class Main {
         // initialize challenge schemas
         loginSqli.initialize();
         blindSqli.initialize();
-        // reflectedXss.initialize() not needed — no database
+        // reflectedXss.initialize() not needed - no database
 
         // server
         VulnaHttpServer server = new VulnaHttpServer(appConfig);
