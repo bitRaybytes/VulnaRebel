@@ -31,6 +31,9 @@ public class LoginSqliChallenge extends Challenge {
     public LoginSqliChallenge(Configuration config, DatabaseManager dbManager) throws ChallengeException {
         super(config);
         this.dbManager = dbManager;
+
+        // TODO make the handler instantiate a list containing the routes
+        // a private final list is required
     }
 
     @Override

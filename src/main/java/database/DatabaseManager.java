@@ -67,7 +67,7 @@ public class DatabaseManager {
         for (int i = 1; i<=retries;i++){
             try{
                 connection = DriverManager.getConnection(
-                        config.getString("database.url.prod"),
+                        config.getString("database.url.prod"), // change here to "database.url.dev" for local database connection
                         config.getString("database.user"),
                         config.getString("database.pass"));
 

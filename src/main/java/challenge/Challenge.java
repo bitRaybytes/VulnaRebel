@@ -54,7 +54,7 @@ public abstract class Challenge {
      * @return the route for this challenge
      */
     public abstract Route route();
-
+    // TODO remove abstract Route route() method and use abstract List<Route> routes() instead or even better Map<String, Route>
     /**
      * Returns all {@link Route} objects this challenge registers
      * with the {@link http.Router}.
