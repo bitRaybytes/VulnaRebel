@@ -63,6 +63,9 @@ docker-compose up --build
 
 Open `http://localhost:8080` in your browser.
 
+⚠️ **WARNING**: VulnaRebel contains intentionally vulnerable code.
+Run locally only. Never expose to a public network.
+
 ## Project Goals
 
 - Build a lightweight web application framework for security challenges
@@ -206,6 +209,15 @@ RmxhZzogY3Rme1JFQURNRV9FeHBsb3Jlcl9TdGF5X0N1cmlvdXN9
 Contributions, ideas, bug reports, and feature suggestions are welcome.
 
 As the project evolves, additional challenge modules and improvements to the core architecture will be added.
+
+To run outside Docker for local development, you additionally need:
+- JDK 25
+- Maven 3.9+
+
+Publish the database port for local JDBC connections by adding
+`5432:5432` under the `db` service ports in `docker-compose.yaml`,
+then update `database.url.prod` in `DatabaseManager` to use
+`database.url.dev` instead of `db`.
 
 ## License
 
