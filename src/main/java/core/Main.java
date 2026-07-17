@@ -22,19 +22,31 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
         // configs
-        Configuration appConfig          = ConfigurationLoader.load("application.properties");
-        Configuration loginSqliConfig    = ConfigurationLoader.load("challenges/loginsqli/challenge.properties");
-        Configuration reflectedXssConfig = ConfigurationLoader.load("challenges/reflectedxss/challenge.properties");
-        Configuration blindsqliConfig    = ConfigurationLoader.load("challenges/blindsqli/challenge.properties");
+        Configuration appConfig = ConfigurationLoader.load("application.properties");
 
         // database
         DatabaseManager dbManager = new DatabaseManager(appConfig);
 
         // challenges
-        Challenge loginSqli     = new LoginSqliChallenge(loginSqliConfig,dbManager);
-        Challenge reflextedXss  = new ReflectedXssChallenge(reflectedXssConfig);
-        Challenge blindSqli     = new BlindSqliChallenge(blindsqliConfig, dbManager);
+        List<Challenge> challenges = List.of(
+            new LoginSqliChallenge(
+                    ConfigurationLoader.load("challenges/loginsqli/challenge.properties"),
+                    dbManager),
+            new ReflectedXssChallenge(
+                    ConfigurationLoader.load("challenges/reflectedxss/challenge.properties")),
+            new BlindSqliChallenge(
+                    ConfigurationLoader.load("challenges/blindsqli/challenge.properties"),
+                    dbManager)
+        );
 
+        // initialize challenge schemas before registering a router
+        for (Challenge challenge : challenges){
+            challenge.initialize();
+        }
+
+
+        // TODO
+        // A challenge should implement its own resources.
 
         // article configs
         TemplateRenderer sqliResource = new TemplateRenderer(
@@ -68,21 +80,13 @@ public class Main {
         // Router
         Router router = new Router();
         router.register(new Route(appConfig.getString("application.indexRoute"), new IndexHandler()));
-        router.register(loginSqli.route());
-        router.register(reflextedXss.route());
-        //registers blindSqli Routes:
-        for (Route route : blindSqli.routes()){
-            router.register(route);
+        for (Challenge challenge : challenges){
+            router.register(challenge.route());
         }
         router.register(new Route("/resources", new ResourceIndexHandler(articles)));
         router.register(new Route("/resources/sql-injection", sqliArticle));
         router.register(new Route("/resources/blind-sql-injection", blindSqliArticle));
         router.register(new Route("/resources/reflected-xss", reflectedXssArticle));
-
-        // initialize challenge schemas
-        loginSqli.initialize();
-        blindSqli.initialize();
-        // reflectedXss.initialize() not needed - no database
 
         // server
         VulnaHttpServer server = new VulnaHttpServer(appConfig);
