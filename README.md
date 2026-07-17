@@ -56,7 +56,7 @@ Every challenge is designed to resemble realistic application behavior while rem
 **Prerequisites:** Docker, Docker Compose
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/bitRaybytes/VulnaRebel
 cd vulnarebel
 docker-compose up --build
 ```
@@ -75,7 +75,7 @@ Open `http://localhost:8080` in your browser.
 
 VulnaRebel is currently under active development.
 
-The first implemented challenge focuses on a vulnerable login form that demonstrates SQL Injection.
+The first implemented challenges focuses on vulnerable login form that demonstrates SQL Injection, a search example demonstrating blind SQL Injection and a Reflected XSS challenge that demonstrates client side vulnerabilities.
 
 Current implementation includes:
 
@@ -86,7 +86,7 @@ Current implementation includes:
 - Configuration system using `application.properties`
 - Database connection management `DatabaseManager`
 - Modular project architecture prepared for future challenge modules
-- First Login SQLI Challenge
+- Challenges: Login SQLI, Blind SQLI and Reflected XSS
 
 ## Planned Challenges
 
@@ -111,12 +111,13 @@ The project is divided into independent components:
 
 ```text
 src/main/java/
+  ├── article/       Challenge related resources like articles
   ├── challenge/     Challenges like SQLi, BlindSQLi ...
   ├── config/        Configuration loading
   ├── core/          Application, Main entry point
   ├── database/      DatabaseManager, SchemaInitializer
   ├── http/          VulnaHttpServer, Router, Route, BaseHandler
-  ├── challenge/
+  ├── challenge/     
   │   ├── login/     SQL Injection challenge
   │   └── ...        More upcoming
   └── exceptions/    Custom exceptions
