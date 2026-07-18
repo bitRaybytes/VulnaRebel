@@ -51,6 +51,11 @@ The project is built with pure Java, PostgreSQL, and Docker, without relying on 
 
 Every challenge is designed to resemble realistic application behavior while remaining isolated and reproducible through Docker.
 
+## Requirements
+
+- [Git](https://git-scm.com/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
 ## Getting Started
 
 **Prerequisites:** Docker, Docker Compose
