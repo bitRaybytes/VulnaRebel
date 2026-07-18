@@ -32,12 +32,16 @@ public class ReflectedXssHandler extends BaseHandler {
         if ( exchange == null ) throw new ReflectedXssHandlerException(
                 getClass().getName() + ": HttpExchange cannot be null."
         );
-        String rawQuery = exchange.getRequestURI().getQuery();
-        if (rawQuery == null) rawQuery = "query=";
         byte[] htmlBytes = readResource("/static/challenges/reflectedxss/reflectedxss.html");
         String html = new String(htmlBytes, StandardCharsets.UTF_8);
-        Map<String, String> decoded = parseUrlEncodedData(rawQuery);
-        String userInput = decoded.getOrDefault("query", ""); // guard a NPE
+        String rawQuery = exchange.getRequestURI().getQuery();
+
+        String userInput = "";
+        if (rawQuery != null && rawQuery.contains("=")) {
+            Map<String, String> decoded = parseUrlEncodedData(rawQuery);
+            userInput = decoded.getOrDefault("query", "");
+        }
+
         // INTENTIONAL VULNERABILITY:
         // User input is reflected without output encoding.
         // This simulates a reflected XSS vulnerability.
