@@ -1,11 +1,12 @@
 package challenge;
 
+import article.ArticleCard;
 import config.Configuration;
-import exceptions.ChallengeException;
 import exceptions.ChallengeException;
 import http.Route;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Base abstraction for all VulnaRebel challenge modules.
@@ -44,30 +45,12 @@ public abstract class Challenge {
     }
 
     /**
-     * Returns the {@link Route} that registers this challenge
-     * with the {@link http.Router}.
-     * <p>
-     * Implementations must construct the handler and return
-     * a fully wired {@link Route} with the challenge's path.
-     * </p>
-     *
-     * @return the route for this challenge
-     */
-    public abstract Route route();
-    // TODO remove abstract Route route() method and use abstract List<Route> routes() instead or even better Map<String, Route>
-    /**
      * Returns all {@link Route} objects this challenge registers
      * with the {@link http.Router}.
-     * <p>
-     * The default implementation wraps {@link #route()} in a
-     * single-element list. Challenges requiring multiple routes - such as
-     * {@link challenge.blindsqli.BlindSqliChallenge} - should override this method
-     * instead of {@link #route()}.
-     * </p>
      *
      * @return an unmodifiable list of routes for this challenge
      */
-    public List<Route> routes(){ return List.of(route());}
+    public abstract List<Route> routes();
 
     /**
      * Initializes the database schema and seed data for this challenge.
@@ -83,6 +66,23 @@ public abstract class Challenge {
      *         SQL execution fails
      */
     public void initialize() throws ChallengeException {
-        // intentionally empty — not all challenges require database initialization
+        // intentionally empty - not all challenges require database initialization
+    }
+
+    /**
+     * Returns the {@link ArticleCard} for this challenge's resource article,
+     * used to populate the resource index page.
+     * <p>
+     * The default implementation returns {@link Optional#empty()} -
+     * challenges without a resource article do not need to override this.
+     * Challenges that provide an article should override both this method
+     * and include the article route in {@link #routes()}.
+     * </p>
+     *
+     * @return an {@link Optional} containing the card, or empty if
+     *         this challenge has no associated article
+     */
+    public Optional<ArticleCard> articleCard() {
+        return Optional.empty();
     }
 }
