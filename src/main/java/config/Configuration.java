@@ -107,7 +107,7 @@ public class Configuration {
      *
      * @return an unmodifiable map of all property keys and their values
      */
-    public Map<String, String> asMap(){
+    public Map<String, String> entries(){
         Map<String, String> entries = new HashMap<>();
 
         for (Map.Entry<Object, Object> map : properties.entrySet())
