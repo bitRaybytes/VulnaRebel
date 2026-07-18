@@ -33,6 +33,7 @@ Run locally only. Never expose to a public network.
   * [Overview](#overview)
   * [Requirements](#requirements)
   * [Getting Started](#getting-started)
+  * [API Documentation](#api-documentation)
   * [Project Goals](#project-goals)
   * [Current Status](#current-status)
   * [Planned Challenges](#planned-challenges)
@@ -71,6 +72,14 @@ Open `http://localhost:8080` in your browser.
 
 ⚠️ **WARNING**: VulnaRebel contains intentionally vulnerable code.
 Run locally only. Never expose to a public network.
+
+## API Documentation
+
+Generate the Javadoc locally with:
+
+```bash
+mvn javadoc:javadoc
+```
 
 ## Project Goals
 
