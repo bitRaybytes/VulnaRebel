@@ -74,7 +74,7 @@ public final class TemplateRenderer {
                     getClass().getName() + ": HTML template cannot be null or empty.");
         }
         String rendered = new String(html, StandardCharsets.UTF_8);
-        for (Map.Entry<String, String> entry : config.asMap().entrySet()) {
+        for (Map.Entry<String, String> entry : config.entries().entrySet()) {
             String value = applyInlineFormatting(entry.getValue());
             rendered = rendered.replace(
                     "{{" + entry.getKey() + "}}",
