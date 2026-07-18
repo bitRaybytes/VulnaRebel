@@ -1,7 +1,6 @@
 package core;
 
 import article.ArticleCard;
-import article.ResourceHandler;
 import article.ResourceIndexHandler;
 import challenge.Challenge;
 import challenge.blindsqli.BlindSqliChallenge;
@@ -10,18 +9,18 @@ import challenge.reflectedxss.ReflectedXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import html.TemplateRenderer;
 import http.IndexHandler;
 import http.Route;
 import http.Router;
 import http.VulnaHttpServer;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        // configs
+    static void main(String[] args) throws Exception {
+        // config
         Configuration appConfig = ConfigurationLoader.load("application.properties");
 
         // database
@@ -29,14 +28,9 @@ public class Main {
 
         // challenges
         List<Challenge> challenges = List.of(
-            new LoginSqliChallenge(
-                    ConfigurationLoader.load("challenges/loginsqli/challenge.properties"),
-                    dbManager),
-            new ReflectedXssChallenge(
-                    ConfigurationLoader.load("challenges/reflectedxss/challenge.properties")),
-            new BlindSqliChallenge(
-                    ConfigurationLoader.load("challenges/blindsqli/challenge.properties"),
-                    dbManager)
+            new LoginSqliChallenge(dbManager),
+            new ReflectedXssChallenge(),
+            new BlindSqliChallenge(dbManager)
         );
 
         // initialize challenge schemas before registering a router
@@ -44,54 +38,25 @@ public class Main {
             challenge.initialize();
         }
 
-
-        // TODO
-        // A challenge should implement its own resources.
-
-        // article configs
-        TemplateRenderer sqliResource = new TemplateRenderer(
-                ConfigurationLoader.load("challenges/loginsqli/article.properties")
-        );
-        TemplateRenderer blindSqliResource = new TemplateRenderer(
-                ConfigurationLoader.load("challenges/blindsqli/article.properties")
-        );
-        TemplateRenderer reflectedXssResource = new TemplateRenderer(
-                ConfigurationLoader.load("challenges/reflectedxss/article.properties")
-        );
-        // articles
-        ResourceHandler sqliArticle = new ResourceHandler(sqliResource);
-        ResourceHandler blindSqliArticle = new ResourceHandler(blindSqliResource);
-        ResourceHandler reflectedXssArticle = new ResourceHandler(reflectedXssResource);
-
-        // cards
-        List<ArticleCard> articles = List.of(
-                new ArticleCard("SQL Injection",
-                        "Learn how unsanitized input reaches the database.",
-                        "/resources/sql-injection"),
-                new ArticleCard("Blind SQL Injection",
-                        "Extract data character by character without visible output.",
-                        "/resources/blind-sql-injection"),
-                new ArticleCard("Reflected XSS",
-                        "Understand how input is reflected back as executable script.",
-                        "/resources/reflected-xss")
-        );
-
+        List<ArticleCard> cards = challenges.stream()
+                .map(Challenge::articleCard)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
 
         // Router
         Router router = new Router();
-        router.register(new Route(appConfig.getString("application.indexRoute"), new IndexHandler()));
+        router.register(new Route(
+                appConfig.getString("application.indexRoute"), new IndexHandler()));
+        router.register(new Route("/resources", new ResourceIndexHandler(cards)));
         for (Challenge challenge : challenges){
-            router.register(challenge.route());
+            for (Route route : challenge.routes()){
+                router.register(route);
+
+            }
         }
-        router.register(new Route("/resources", new ResourceIndexHandler(articles)));
-        router.register(new Route("/resources/sql-injection", sqliArticle));
-        router.register(new Route("/resources/blind-sql-injection", blindSqliArticle));
-        router.register(new Route("/resources/reflected-xss", reflectedXssArticle));
 
-        // server
-        VulnaHttpServer server = new VulnaHttpServer(appConfig);
-
-        // application
-        new Application(server, router).start();
+        // server & application
+        new Application(new VulnaHttpServer(appConfig), router).start();
     }
 }
