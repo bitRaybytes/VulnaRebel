@@ -216,7 +216,7 @@ Most users only read documentation.
 Security professionals inspect everything.
 
 ```
-RmxhZzogY3Rme1JFQURNRV9FeHBsb3Jlcl9TdGF5X0N1cmlvdXN9
+Y3Rme0xldF9UaGVfQ2hhbGxlbmdlc19CZWdpbn0=
 ```
 
 ## Contributing
