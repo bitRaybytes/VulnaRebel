@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 /**
- * The {@code BaseHandler} class is the abstraction of any handler</br>
+ * The {@code BaseHandler} class is the abstraction of any handler
  * Every challenge need to have its own Handler extending the {@code BaseHandler}.
  */
 
@@ -110,8 +110,8 @@ public abstract class BaseHandler implements HttpHandler {
     }
 
     /**
-     * This method parses the body of a request<br>
-     * To read the body it is recommended to use the {@link BaseHandler} readBody() method.<br>
+     * This method parses the body of a request
+     * To read the body it is recommended to use the {@link BaseHandler} readBody() method.
      * @param body the body which contains the payload
      * @return java.util.Map
      * @throws BaseHandlerException if no pair is found

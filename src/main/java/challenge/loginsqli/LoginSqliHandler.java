@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Handler for {@link LoginSqliChallenge} to handle requests and responses.<br>
+ * Handler for {@link LoginSqliChallenge} to handle requests and responses.
  * Extends {@link BaseHandler}. Does need a {@link LoginSqliService} to manage the authorization and a {@link Configuration}
  * to load the challenges-specific {@code challenge.properties}.
  */

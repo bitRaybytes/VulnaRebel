@@ -27,14 +27,13 @@ public class LoginSqliService {
     }
 
     /**
-     * The method runs a deliberately vulnerable SQL query.<br>
+     * The method runs a deliberately vulnerable SQL query.
      * <p>
      *     Attempts to log in with {@code username} and {@code password}.
-     *     <br>
      *     Parameters are directly concatenated into the query without
      *     sanitization, enabling SQL injection f.e. via {@code 'OR '1'='1}-based payloads.
      * </p>
-     * String concatenation isn't sanitized, no `PreparedStatement` is used intentionally.<br>
+     * String concatenation isn't sanitized, no `PreparedStatement` is used intentionally.
      * @param username the raw user input - not sanitized
      * @param password the raw user input - not sanitized
      * @return {@code true} if {@code username} and {@code password} found

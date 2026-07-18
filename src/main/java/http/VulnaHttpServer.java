@@ -10,8 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
  /**
-  * This class owns an underlying `HttpServer` lifecycle (create, start, stop, add contexts).</br>
-  * If calling a {@code VulnaHttpServer} object the server will get implicitly instantiated.</br>
+  * This class owns an underlying `HttpServer` lifecycle (create, start, stop, add contexts).
+  * If calling a {@code VulnaHttpServer} object the server will get implicitly instantiated.
   * */
 public class VulnaHttpServer {
     private static final Logger LOGGER = Logger.getLogger(VulnaHttpServer.class.getName());

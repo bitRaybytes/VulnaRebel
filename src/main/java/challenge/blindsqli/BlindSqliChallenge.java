@@ -19,7 +19,7 @@ import java.util.Optional;
  * Challenge module for the Blind SQL Injection topic.
  * <p>
  * Extends {@link Challenge} and overrides {@link #initialize()} to create
- * the {@code blind_users} table and seed it with dummy data.<br>
+ * the {@code blind_users} table and seed it with dummy data.
  * Requires a {@link DatabaseManager} for database initialization
  * and per-request query execution.
  * </p>

@@ -14,7 +14,7 @@ import java.util.Map;
  * Serves the challenge page on GET.
  * </p>
  * <p>
- * There is no response, since this challenge will run on client-side.<br>
+ * There is no response, since this challenge will run on client-side.
  * To retrieve the flag, the user has to inject a specific malicious {@code JavaScript}
  * payload into the search form to read from a dummy environment data-set set up sitting in the script-tag of the html.
  * </p>
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ReflectedXssHandler extends BaseHandler {
 
     /**
-     * User input is reflected without output encoding.<br>
+     * User input is reflected without output encoding.
      * This simulates a reflected XSS vulnerability.
      * @param exchange a {@link HttpExchange} to read the data from.
      * @throws IOException if an error occurs.
