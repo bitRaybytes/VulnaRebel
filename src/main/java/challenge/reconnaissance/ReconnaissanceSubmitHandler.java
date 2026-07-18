@@ -28,9 +28,7 @@ public class ReconnaissanceSubmitHandler extends BaseHandler {
     protected void doPost(HttpExchange exchange) throws IOException {
         Map<String, String> form = parseUrlEncodedData(readBody(exchange));
         String submitted = form.get("flag").trim();
-        System.out.println("submitted flag: " + submitted);
         String expected  = challengeConfig.getString("challenge.flag");
-        System.out.println("expected flag: " + expected);
 
         if (expected.equals(submitted)) {
             exchange.getResponseHeaders().set("Location",
