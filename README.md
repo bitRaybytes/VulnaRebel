@@ -31,6 +31,7 @@ Run locally only. Never expose to a public network.
 ## Table of Content
 
   * [Overview](#overview)
+  * [Requirements](#requirements)
   * [Getting Started](#getting-started)
   * [Project Goals](#project-goals)
   * [Current Status](#current-status)
