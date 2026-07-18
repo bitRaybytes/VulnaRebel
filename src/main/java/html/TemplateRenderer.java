@@ -5,6 +5,8 @@ import exceptions.TemplateRendererException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Renders HTML templates by replacing {@code {{key}}} placeholders
@@ -44,8 +46,10 @@ public final class TemplateRenderer {
     }
 
     /**
-     * Renders an HTML template by replacing {@code {{key}}} placeholders
-     * with values from the injected {@link Configuration}.
+     * Backtick-wrapped text in property values is converted to
+     * {@code <code>} tags with HTML special characters encoded,
+     * preventing injected content from executing as real HTML.
+     *
      * <p>
      * Each key in the configuration is matched against placeholders of
      * the form {@code {{key}}} in the HTML. Unmatched placeholders
@@ -81,9 +85,24 @@ public final class TemplateRenderer {
     }
 
     // Converts backtick-wrapped text to <code> tags.
-    // Example: `SELECT * FROM users` => <code>SELECT * FROM users</code>
+    // HTML special characters inside backticks are encoded first to prevent
+    // the browser from interpreting injected content as real HTML elements.
+    // Example: `<img src=x onerror=alert(1)>`
+    //       => <code>&lt;img src=x onerror=alert(1)&gt;</code>
     private String applyInlineFormatting(String text) {
-        return text.replaceAll("`([^`]+)`", "<code>$1</code>");
+        Matcher matcher = Pattern.compile("`([^`]+)`").matcher(text);
+        StringBuilder result = new StringBuilder();
+        while (matcher.find()) {
+            String encoded = matcher.group(1)
+                    .replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\"", "&quot;");
+            matcher.appendReplacement(result,
+                    Matcher.quoteReplacement("<code>" + encoded + "</code>"));
+        }
+        matcher.appendTail(result);
+        return result.toString();
     }
 
 }
