@@ -5,11 +5,12 @@ import article.ResourceIndexHandler;
 import challenge.Challenge;
 import challenge.blindsqli.BlindSqliChallenge;
 import challenge.loginsqli.LoginSqliChallenge;
+import challenge.reconnaissance.ReconnaissanceChallenge;
 import challenge.reflectedxss.ReflectedXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import http.IndexHandler;
+import http.ChallengesHandler;
 import http.Route;
 import http.Router;
 import http.VulnaHttpServer;
@@ -28,6 +29,7 @@ public class Main {
 
         // challenges
         List<Challenge> challenges = List.of(
+            new ReconnaissanceChallenge(),
             new LoginSqliChallenge(dbManager),
             new ReflectedXssChallenge(),
             new BlindSqliChallenge(dbManager)
@@ -47,7 +49,7 @@ public class Main {
         // Router
         Router router = new Router();
         router.register(new Route(
-                appConfig.getString("application.indexRoute"), new IndexHandler()));
+                appConfig.getString("application.challengesRoute"), new ChallengesHandler()));
         router.register(new Route("/resources", new ResourceIndexHandler(cards)));
         for (Challenge challenge : challenges){
             for (Route route : challenge.routes()){
