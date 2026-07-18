@@ -48,7 +48,7 @@ public abstract class Challenge {
      * Returns all {@link Route} objects this challenge registers
      * with the {@link http.Router}.
      *
-     * @return an unmodifiable list of routes for this challenge
+     * @return a list of routes for this challenge
      */
     public abstract List<Route> routes();
 
