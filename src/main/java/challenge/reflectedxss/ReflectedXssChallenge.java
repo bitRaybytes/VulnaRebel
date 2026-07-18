@@ -1,9 +1,16 @@
 package challenge.reflectedxss;
 
+import article.ArticleCard;
+import article.ResourceHandler;
 import challenge.Challenge;
 import config.Configuration;
+import config.ConfigurationLoader;
 import exceptions.ChallengeException;
+import html.TemplateRenderer;
 import http.Route;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Challenge module for the Reflected Xss topic.
@@ -12,16 +19,29 @@ import http.Route;
  * </p>
  */
 public class ReflectedXssChallenge extends Challenge {
-    /**
-     * @param config    the challenge-specific configuration
-     * @throws ChallengeException if {@code config} is null
-     */
-    public ReflectedXssChallenge(Configuration config) throws ChallengeException {
-        super(config);
+    private final Configuration articleConfig;
+
+
+    public ReflectedXssChallenge() throws ChallengeException {
+        super(ConfigurationLoader.load("challenges/reflectedxss/challenge.properties"));
+        this.articleConfig = ConfigurationLoader.load("challenges/reflectedxss/article.properties");
     }
 
     @Override
-    public Route route() {
-        return new Route(config().getString("challenge.route"), new ReflectedXssHandler());
+    public List<Route> routes() {
+        TemplateRenderer renderer = new TemplateRenderer(articleConfig);
+        return List.of(new Route(
+                config().getString("challenge.route"), new ReflectedXssHandler()),
+                new Route(articleConfig.getString("card.routing"), new ResourceHandler(renderer))
+                );
+    }
+
+    @Override
+    public Optional<ArticleCard> articleCard() {
+        return Optional.of(new ArticleCard(
+                articleConfig.getString("card.title"),
+                articleConfig.getString("card.description"),
+                articleConfig.getString("card.routing")
+        ));
     }
 }

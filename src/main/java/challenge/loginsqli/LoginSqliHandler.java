@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Handler for {@link LoginSqliChallenge} to handle requests and responses.<br>
  * Extends {@link BaseHandler}. Does need a {@link LoginSqliService} to manage the authorization and a {@link Configuration}
- * to load the challenges-specific {@code configuration.properties}.
+ * to load the challenges-specific {@code challenge.properties}.
  */
 public class LoginSqliHandler extends BaseHandler {
     private final LoginSqliService service;
