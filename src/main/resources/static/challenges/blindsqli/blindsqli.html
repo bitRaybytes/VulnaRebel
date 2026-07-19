@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <title>VulnaRebel — Blind SQL Injection</title>
     <style>
-        * { font-family: helvetica; margin: 0; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        *{font-family:helvetica; line-height:1.5;}
+        body{
+            height:100dvh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+        }
         h1, h2 { display: flex; justify-content: center; text-align: center; margin: 5px 0; }
         nav { display: flex; flex-direction: row; align-items: center; }
         form {
@@ -79,70 +85,72 @@
                 nothing more.<br><br>
                 Somewhere in the database is a <strong>secret</strong> column
                 that is never shown to you directly.
-                Your goal is to extract its value one character at a time
-                and submit the flag below.
+                Your goal is to extract its value one character at a time and submit the flag below.
             </p>
         </div>
     </div>
 
-<!-- Search form -->
-<div class="outerFormWrapper">
-    <div class="innerFormWrapper">
-        <div class="formWrapper">
-            <form action="/blindsqli" method="post">
-                <input type="text" name="username" placeholder="Search for user...">
-                <div class="btnwrapper">
-                    <input type="submit" class="button" value="Search">
+    <!-- Search form -->
+    <div class="outerFormWrapper">
+        <div class="innerFormWrapper">
+            <div class="formWrapper">
+                <form action="/blindsqli" method="post">
+                    <input type="text" name="username" placeholder="Search for user...">
+                    <div class="btnwrapper">
+                        <input type="submit" class="button" value="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="margin:20px;">
+            {{resultDisplay}}
+        </div>
+
+        <!-- Hints -->
+        <div class="challengeHints">
+            <div class="hintsWrapper">
+                <a href="#" id="openHints">Need a hint?</a>
+                <a href="#" id="toggleOff" style="margin-left:25px;">reset hints</a>
+
+                <p id="hint" style="display:none; margin: 20px 0;">
+                    The application only tells you <em>true</em> or <em>false</em>.
+                    What if you could turn a SQL query into a yes/no question?<br>
+                    <a href="#" id="toggleMoreHint">More hints</a>
+                </p>
+
+                <p id="moreHint" style="display:none; margin: 20px 0;">
+                    The query behind this form looks something like:<br>
+                    <code>SELECT username FROM blind_users WHERE username = 'your_input'</code><br>
+                    It returns nothing visible - just whether a row was found.
+                    Can you append a condition that tests a single character?<br>
+                    <a href="#" id="toggleLastHint">One more hint</a>
+                </p>
+
+                <p id="lastHint" style="display:none; margin: 20px 0;">
+                    Look up <code>SUBSTRING(column, position, 1)</code> in PostgreSQL.<br>
+                    If you can make the query return "User found" only when a specific
+                    character matches, you can extract the secret one character at a time.<br>
+                    Example shape (fill in the blanks):<br>
+                    <code>admin' AND SUBSTRING(secret, 1, 1)='?' --</code>
+                </p>
+            </div>
+        </div>
+
+        <!-- Flag submission -->
+        <div class="submitSection">
+            <p style="margin-bottom:10px;">Found the secret? Submit it here:</p>
+            <form action="/blindsqli/submit" method="post">
+                <input type="text" name="flag" placeholder="ctf{...}">
+                <div class="btnwrapper" style="margin-top:5px;">
+                    <input type="submit" class="button" value="Submit">
                 </div>
             </form>
         </div>
     </div>
-    <div style="margin:20px;">
-        {{resultDisplay}}
-    </div>
 
-    <!-- Hints -->
-    <div class="challengeHints">
-        <div class="hintsWrapper">
-            <a href="#" id="openHints">Need a hint?</a>
-            <a href="#" id="toggleOff" style="margin-left:25px;">reset hints</a>
-
-            <p id="hint" style="display:none; margin: 20px 0;">
-                The application only tells you <em>true</em> or <em>false</em>.
-                What if you could turn a SQL query into a yes/no question?<br>
-                <a href="#" id="toggleMoreHint">More hints</a>
-            </p>
-
-            <p id="moreHint" style="display:none; margin: 20px 0;">
-                The query behind this form looks something like:<br>
-                <code>SELECT username FROM blind_users WHERE username = 'your_input'</code><br>
-                It returns nothing visible - just whether a row was found.
-                Can you append a condition that tests a single character?<br>
-                <a href="#" id="toggleLastHint">One more hint</a>
-            </p>
-
-            <p id="lastHint" style="display:none; margin: 20px 0;">
-                Look up <code>SUBSTRING(column, position, 1)</code> in PostgreSQL.<br>
-                If you can make the query return "User found" only when a specific
-                character matches, you can extract the secret one character at a time.<br>
-                Example shape (fill in the blanks):<br>
-                <code>admin' AND SUBSTRING(secret, 1, 1)='?' --</code>
-            </p>
-        </div>
-    </div>
-
-    <!-- Flag submission -->
-    <div class="submitSection">
-        <p style="margin-bottom:10px;">Found the secret? Submit it here:</p>
-        <form action="/blindsqli/submit" method="post">
-            <input type="text" name="flag" placeholder="ctf{...}">
-            <div class="btnwrapper" style="margin-top:5px;">
-                <input type="submit" class="button" value="Submit">
-            </div>
-        </form>
-    </div>
-</div>
-
+    <footer>
+        <p>Made with ❤</p>
+    </footer>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('openHints').addEventListener('click', function (e) {
