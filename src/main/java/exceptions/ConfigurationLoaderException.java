@@ -1,7 +1,5 @@
 package exceptions;
 
-import java.io.IOException;
-
 /**
  * Thrown when a configuration file cannot be loaded
  * or parsed successfully.

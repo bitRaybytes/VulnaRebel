@@ -1,7 +1,5 @@
 package exceptions;
 
-import java.io.IOException;
-
 /**
  * Thrown when a {@code BaseHandler} encounters an invalid state
  * while processing an HTTP request or response.

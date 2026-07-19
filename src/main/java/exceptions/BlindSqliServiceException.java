@@ -1,9 +1,5 @@
 package exceptions;
 
-
-import java.io.IOException;
-import java.sql.SQLException;
-
 /**
  * Thrown when the Blind SQL Injection service
  * cannot execute or process a database operation.

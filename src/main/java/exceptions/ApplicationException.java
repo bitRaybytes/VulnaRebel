@@ -1,7 +1,5 @@
 package exceptions;
 
-import java.io.IOException;
-
 /**
  * Thrown when the application fails during startup
  * or while initializing core components.
