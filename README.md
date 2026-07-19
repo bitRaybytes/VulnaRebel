@@ -229,10 +229,8 @@ To run outside Docker for local development, you additionally need:
 - JDK 25
 - Maven 3.9+
 
-Publish the database port for local JDBC connections by adding
-`5432:5432` under the `db` service ports in `docker-compose.yaml`,
-then update `database.url.prod` in `DatabaseManager` to use
-`database.url.dev` instead of `db`.
+Publish the database port for local JDBC connections by adding `5432:5432` under the `db` service ports in `docker-compose.yaml`,
+then update `database.url.prod` in `DatabaseManager` to use `database.url.dev` instead of `db`.
 
 ## License
 
