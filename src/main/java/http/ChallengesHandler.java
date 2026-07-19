@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * Serves the web application challenges page listing all available
- * challenges. Navigation provides a link to the
+ * challenges. Navigation provides a link to the resource section.
  * <p>
  * Handles {@code GET /challenges} and renders the static
  * {@code challenges.html} dashboard - a card holding all linking to
