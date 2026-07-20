@@ -151,29 +151,31 @@
     <footer>
         <p>Made with ❤</p>
     </footer>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('openHints').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('hint').style.display = 'block';
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('openHints').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'block';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+            document.getElementById('toggleOff').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'none';
+            });
+            document.getElementById('toggleMoreHint').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('hint').style.display = 'none';
+                document.getElementById('moreHint').style.display = 'block';
+            });
+            document.getElementById('toggleLastHint').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('moreHint').style.display = 'none';
+                document.getElementById('lastHint').style.display = 'block';
+            });
         });
-        document.getElementById('toggleOff').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('hint').style.display = 'none';
-            document.getElementById('moreHint').style.display = 'none';
-            document.getElementById('lastHint').style.display = 'none';
-        });
-        document.getElementById('toggleMoreHint').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('hint').style.display = 'none';
-            document.getElementById('moreHint').style.display = 'block';
-        });
-        document.getElementById('toggleLastHint').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('moreHint').style.display = 'none';
-            document.getElementById('lastHint').style.display = 'block';
-        });
-    });
-</script>
+    </script>
 </body>
 </html>
