@@ -7,6 +7,7 @@ import challenge.blindsqli.BlindSqliChallenge;
 import challenge.loginsqli.LoginSqliChallenge;
 import challenge.reconnaissance.ReconnaissanceChallenge;
 import challenge.reflectedxss.ReflectedXssChallenge;
+import challenge.storedxss.StoredXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
@@ -29,10 +30,11 @@ public class Main {
 
         // challenges
         List<Challenge> challenges = List.of(
-            new ReconnaissanceChallenge(),
-            new LoginSqliChallenge(dbManager),
-            new ReflectedXssChallenge(),
-            new BlindSqliChallenge(dbManager)
+                new ReconnaissanceChallenge(),
+                new LoginSqliChallenge(dbManager),
+                new ReflectedXssChallenge(),
+                new BlindSqliChallenge(dbManager),
+                new StoredXssChallenge(dbManager)
         );
 
         // initialize challenge schemas before registering a router
@@ -54,7 +56,6 @@ public class Main {
         for (Challenge challenge : challenges){
             for (Route route : challenge.routes()){
                 router.register(route);
-
             }
         }
 
