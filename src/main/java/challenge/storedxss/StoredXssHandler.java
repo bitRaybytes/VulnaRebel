@@ -57,18 +57,19 @@ public class StoredXssHandler extends BaseHandler {
                 readResource("/static/challenges/storedxss/storedxss.html"),
                 StandardCharsets.UTF_8);
 
-        List<String[]> messages = service.getComments();
+        List<GuestbookEntry> messages = service.getComments();
 
         StringBuilder entries = new StringBuilder();
-        for (String[] entry : messages) {
-            // unsanitized — INTENTIONAL VULNERABILITY
-            entries.append("<div class='entry'>")
-                    .append("<strong>").append(entry[0]).append("</strong>")
-                    .append("<p>").append(entry[1]).append("</p>")
+        for (GuestbookEntry entry : messages) {
+            // unsanitized - INTENTIONAL VULNERABILITY
+            entries.append("<div>")
+                    .append("<strong>")
+                    .append(entry.author())
+                    .append("</strong>")
+                    .append("<p>")
+                    .append(entry.message())
+                    .append("</p>")
                     .append("</div>");
-            // INTENTIONAL VULNERABILITY: message injected without sanitization
-//            entries.append(entry[0])
-//                    .append(" ").append(entry[1]);
         }
 
         System.out.println("Entries: " + entries);
