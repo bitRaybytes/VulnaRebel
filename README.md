@@ -104,7 +104,7 @@ Current implementation includes:
 - Configuration system using `application.properties`
 - Database connection management `DatabaseManager`
 - Modular project architecture prepared for future challenge modules
-- Challenges: Login SQLI, Blind SQLI and Reflected XSS
+- Challenges: Login SQLI, Blind SQLI and Reflected XSS and many more
 
 ## Planned Challenges
 
