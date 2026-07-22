@@ -160,7 +160,7 @@ public abstract class BaseHandler implements HttpHandler {
         if (statusCode < 100 || statusCode > 599){
             throw new BaseHandlerException(
                     getClass().getName() +
-                            ": Failed to send the response. Check Http Statuscode."
+                            ": Http Statuscode is not defined or out of range. Check Http Statuscode."
             );
         }
     }
