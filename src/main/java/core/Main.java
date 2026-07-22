@@ -11,7 +11,7 @@ import challenge.storedxss.StoredXssChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import http.ChallengesHandler;
+import challenge.ChallengesHandler;
 import http.Route;
 import http.Router;
 import http.VulnaHttpServer;
