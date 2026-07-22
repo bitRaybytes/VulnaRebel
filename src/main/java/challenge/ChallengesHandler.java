@@ -18,10 +18,10 @@ import java.io.IOException;
  * page is static and requires no configuration or rendering.
  * </p>
  */
-public class ChallengesHandler extends BaseHandler{
+public class ChallengesHandler extends BaseHandler {
 
     /**
-     * Serves the web application index page.
+     * Serves the web application challenges page where each challenge is listed.
      *
      * @param exchange the HTTP exchange for this request
      * @throws IOException if the HTML resource cannot be read
