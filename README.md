@@ -182,30 +182,30 @@ Do not expose VulnaRebel to public networks or production environments.
 
 ## Screenshots
 ### Dashboard
-![](/Docs/screenshots/VWA_Dashboard.png)
+![](/Docs/resources/screenshots/VWA_Dashboard.png)
 
 ### Challenges
 
 <details><summary>SQL Injection (easy)</summary>
 
 #### Login SQLi Challenge - Main
-![](/Docs/screenshots/VWA_Login_Challenge.png)
+![](/Docs/resources/screenshots/VWA_Login_Challenge.png)
 
 #### Login SQLi Challenge - Failed Attempt
-![](/Docs/screenshots/VWA_failedAttempt.png)
+![](/Docs/resources/screenshots/VWA_failedAttempt.png)
 
 #### Login SQLi Challenge - Revealed flag
-![](/Docs/screenshots/VWA_Flag.png)
+![](/Docs/resources/screenshots/VWA_Flag.png)
 
 </details>
 
 <details><summary>Reflected Xss (easy)</summary>
 
 #### Reflected Xss Challenge
-![](/Docs/screenshots/VWA_xss_challenge.png)
+![](/Docs/resources/screenshots/VWA_xss_challenge.png)
 
 #### Reflected Xss - Revealed flag
-![](/Docs/screenshots/VWA_xss_flag.png)
+![](/Docs/resources/screenshots/VWA_xss_flag.png)
 
 </details>
 
