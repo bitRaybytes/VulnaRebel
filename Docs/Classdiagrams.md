@@ -1,7 +1,7 @@
 # Classdiagrams Of VulnaRebel
 
 This document provides architectural overviews of VulnaRebel's main component groups. Each diagram was generated from PlantUML
-source files located in `./resources/classdiagrams`.
+source files located in `./resources/classdiagrams/`.
 
 
 ## Classdiagramm
