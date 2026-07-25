@@ -6,35 +6,33 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SchemaInitializerIntegrationTest {
+
     @Test
-    void initialize_shouldThrow_whenIdempotent(){
+    void initialize_shouldExecuteSqlMultipleTimes_whenCalledMultipleTimes() throws Exception {
+
         DatabaseManager manager = mock(DatabaseManager.class);
         Connection conn = mock(Connection.class);
-        Statement stmt  = mock(Statement.class);
+        Statement stmt = mock(Statement.class);
 
-        try {
-            when(manager.getConnection()).thenReturn(conn);
-            when(conn.createStatement()).thenReturn(stmt);
-        } catch (SQLException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        when(manager.getConnection())
+                .thenReturn(conn);
 
-        SchemaInitializer initializer =
-                new SchemaInitializer(manager);
+        when(conn.createStatement())
+                .thenReturn(stmt);
 
-        initializer.initialize("testchallenge");
+        SchemaInitializer initializer = new SchemaInitializer(manager);
         initializer.initialize("testchallenge");
         initializer.initialize("testchallenge");
 
+        verify(stmt, atLeast(2))
+                .execute(anyString());
     }
 
     @Test
@@ -43,16 +41,10 @@ public class SchemaInitializerIntegrationTest {
         Configuration config =
                 ConfigurationLoader.load("test-database.properties");
 
-        DatabaseManager manager =
-                new DatabaseManager(config);
+        DatabaseManager manager = new DatabaseManager(config);
 
-
-        SchemaInitializer initializer =
-                new SchemaInitializer(manager);
-
-
+        SchemaInitializer initializer = new SchemaInitializer(manager);
         initializer.initialize("testchallenge");
-
 
         try(Connection conn = manager.getConnection();
             Statement stmt = conn.createStatement();
@@ -60,12 +52,8 @@ public class SchemaInitializerIntegrationTest {
                     "SELECT COUNT(*) FROM test_table"
             )) {
 
-
             assertTrue(rs.next());
-
-            assertEquals(
-                    1,
-                    rs.getInt(1)
+            assertEquals(1,rs.getInt(1)
             );
         }
     }
