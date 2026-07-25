@@ -68,7 +68,7 @@ public class StoredXssChallenge extends Challenge {
 
     @Override
     public void initialize() throws ChallengeException {
-        new SchemaInitializer(manager, config())
+        new SchemaInitializer(manager)
                 .initialize(config().getString("challenge.initialize"));
     }
 }

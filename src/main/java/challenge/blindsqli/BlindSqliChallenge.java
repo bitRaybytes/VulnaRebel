@@ -64,6 +64,7 @@ public class BlindSqliChallenge extends Challenge {
 
     @Override
     public void initialize() throws SchemaInitializerException {
-        new SchemaInitializer( dbManager, config() ).initialize(config().getString("challenge.initialize"));
+        new SchemaInitializer(dbManager)
+                .initialize(config().getString("challenge.initialize"));
     }
 }
