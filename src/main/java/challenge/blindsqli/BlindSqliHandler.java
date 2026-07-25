@@ -39,7 +39,7 @@ public class BlindSqliHandler extends BaseHandler {
     protected void doGet(HttpExchange exchange) throws IOException {
         byte[] htmlBytes = readResource("/static/challenges/blindsqli/blindsqli.html");
         String html = new String(htmlBytes, StandardCharsets.UTF_8);
-        String result = html.replace("{{resultDisplay}}", "");
+        String result = html.replace(challengeConfig.getString("challenge.htmlPlaceholder"), "");
         sendResponse(exchange,200,TEXT_HTML,result);
     }
 
@@ -56,7 +56,7 @@ public class BlindSqliHandler extends BaseHandler {
 
             byte[] htmlBytes = readResource("/static/challenges/blindsqli/blindsqli.html");
             String html = new String(htmlBytes, StandardCharsets.UTF_8)
-                    .replace("{{resultDisplay}}", queryResult);
+                    .replace(challengeConfig.getString("challenge.htmlPlaceholder"), queryResult);
 
             sendResponse(exchange, 200, TEXT_HTML, html);
         }  catch (BlindSqliServiceException e) {
