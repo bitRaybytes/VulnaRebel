@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -29,6 +31,8 @@ import java.util.Map;
  * </p>
  */
 public abstract class BaseHandler implements HttpHandler {
+
+    private static final Logger LOGGER = Logger.getLogger(BaseHandler.class.getName());
 
     protected static final String TEXT_HTML = "text/html; charset=utf-8";
     protected static final String TEXT_PLAIN = "text/plain; charset=utf-8";
@@ -63,6 +67,7 @@ public abstract class BaseHandler implements HttpHandler {
                 sendResponse(exchange, 405, TEXT_HTML,"Method Not Allowed");
             }
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Request handling failed.", e);
             sendResponse(exchange, 500, TEXT_HTML,"Internal Server Error");
         }
     }
