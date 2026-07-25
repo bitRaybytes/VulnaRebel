@@ -14,10 +14,22 @@ import http.Route;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Challenge module for the UNION-based SQL Injection challenge.
+ * <p>
+ * Registers the vulnerable search endpoint together with its
+ * accompanying resource article and initializes the database
+ * schema required for the challenge.
+ * </p>
+ * <p>
+ * The challenge demonstrates how attackers can manipulate SQL
+ * queries using the {@code UNION SELECT} operator to retrieve
+ * information from unintended database tables.
+ * </p>
+ */
 public class UnionSqliChallenge extends Challenge {
     private final DatabaseManager manager;
     private final Configuration articleConfig;
-
 
     public UnionSqliChallenge(DatabaseManager manager) {
         super(ConfigurationLoader.load("challenges/unionbasedsqli/challenge.properties"));

@@ -10,6 +10,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * HTTP handler for the UNION-based SQL Injection challenge.
+ * <p>
+ * Serves the challenge page and processes product search requests.
+ * User supplied search terms are forwarded to the
+ * {@link UnionSqliService}, whose intentionally vulnerable SQL
+ * implementation allows UNION-based SQL Injection.
+ * </p>
+ */
 public class UnionSqliHandler extends BaseHandler {
     private final UnionSqliService service;
     private final Configuration challengeConfig;
