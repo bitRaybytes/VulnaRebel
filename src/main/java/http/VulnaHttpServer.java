@@ -40,7 +40,12 @@ public class VulnaHttpServer {
     }
 
      /**
-      * Start the server
+      * Start the server.
+      *
+      * <p>
+      *     This method will also fast guard the {@code server}
+      *     instance checking for null before starting.
+      * </p>
       */
     public void start() {
         if (server == null) {
