@@ -1,7 +1,7 @@
 package exceptions;
 
 /**
- * Thrown when the Blind SQL Injection service
+ * Thrown when the {@link challenge.blindsqli.BlindSqliService}
  * cannot execute or process a database operation.
  * <p>
  * Typical causes include SQL execution failures,
