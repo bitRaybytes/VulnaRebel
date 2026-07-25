@@ -35,32 +35,20 @@ import java.sql.SQLException;
 public class SchemaInitializer {
 
     private final DatabaseManager manager;
-    private final Configuration challengeConfig;
 
     /**
      * @param manager         the database connection factory -
      *                        used to open a connection for SQL execution
-     * @param challengeConfig the challenge-specific configuration -
-     *                        reserved for future challenge-specific
-     *                        database settings such as
-     *                        {@code challenge.db.allow_multi_queries}
      * @throws SchemaInitializerException if either parameter is null
      */
-    public SchemaInitializer(
-            DatabaseManager manager,
-            Configuration challengeConfig) throws SchemaInitializerException {
+    public SchemaInitializer(DatabaseManager manager)
+            throws SchemaInitializerException {
         if (manager == null){
             throw new SchemaInitializerException(
                     getClass().getName() + ": DatabaseManager cannot be null."
             );
         }
-        if (challengeConfig == null){
-            throw new SchemaInitializerException(
-                    getClass().getName() + ": Challenge's config cannot be null."
-            );
-        }
         this.manager = manager;
-        this.challengeConfig = challengeConfig;
     }
 
     /**
