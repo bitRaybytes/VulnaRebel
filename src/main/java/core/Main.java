@@ -8,6 +8,7 @@ import challenge.loginsqli.LoginSqliChallenge;
 import challenge.reconnaissance.ReconnaissanceChallenge;
 import challenge.reflectedxss.ReflectedXssChallenge;
 import challenge.storedxss.StoredXssChallenge;
+import challenge.unionbasedsqli.UnionSqliChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
@@ -34,7 +35,8 @@ public class Main {
                 new LoginSqliChallenge(dbManager),
                 new ReflectedXssChallenge(),
                 new BlindSqliChallenge(dbManager),
-                new StoredXssChallenge(dbManager)
+                new StoredXssChallenge(dbManager),
+                new UnionSqliChallenge(dbManager)
         );
 
         // initialize challenge schemas before registering a router
