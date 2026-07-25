@@ -46,6 +46,7 @@ public class UnionSqliChallenge extends Challenge {
 
     @Override
     public void initialize() throws ChallengeException {
-        new SchemaInitializer(manager,config()).initialize(config().getString("challenge.initialize"));
+        new SchemaInitializer(manager)
+                .initialize(config().getString("challenge.initialize"));
     }
 }
