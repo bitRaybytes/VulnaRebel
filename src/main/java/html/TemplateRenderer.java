@@ -46,6 +46,31 @@ public final class TemplateRenderer {
     }
 
     /**
+     * Renders a challenge page by composing a shared template with a
+     * challenge-specific content fragment, then replacing all
+     * text placeholders from the injected {@link Configuration}.
+     *
+     * @param template the shared challenge's template as bytes
+     * @param content the challenge-specific content fragment as bytes
+     * @return the fully rendered HTML page
+     */
+    public String render(byte[] template, byte[] content) {
+        String composed = new String(template, StandardCharsets.UTF_8)
+                .replace("{{challenge.content}}",
+                        new String(content, StandardCharsets.UTF_8));
+        return renderString(composed);
+    }
+
+    // existing render() delegates to this
+    private String renderString(String html) {
+        for (Map.Entry<String, String> entry : config.entries().entrySet()) {
+            String value = applyInlineFormatting(entry.getValue());
+            html = html.replace("{{" + entry.getKey() + "}}", value);
+        }
+        return html;
+    }
+
+    /**
      * Backtick-wrapped text in property values is converted to
      * {@code <code>} tags with HTML special characters encoded,
      * preventing injected content from executing as real HTML.
