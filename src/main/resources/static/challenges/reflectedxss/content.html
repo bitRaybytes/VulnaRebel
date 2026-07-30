@@ -1,0 +1,9 @@
+<div style="display:flex; justify-content:center;">
+    <form action="/reflectedxss" method="get">
+        <input style="width:300px; height:35px; font-size:16px;" type="search" name="query" placeholder="Search..."  >
+        <input style="width:75px; height:35px; font-size:16px;" type="submit" value="search">
+    </form>
+</div>
+<div style="display:flex; justify-content:center; margin: 20px;" id="searchResult" >
+    {{query}}
+</div>

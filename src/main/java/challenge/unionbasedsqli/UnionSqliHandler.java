@@ -3,6 +3,7 @@ package challenge.unionbasedsqli;
 import com.sun.net.httpserver.HttpExchange;
 import config.Configuration;
 import exceptions.UnionSqliHandlerException;
+import html.TemplateRenderer;
 import http.BaseHandler;
 
 import java.io.IOException;
@@ -22,20 +23,22 @@ import java.util.Map;
 public class UnionSqliHandler extends BaseHandler {
     private final UnionSqliService service;
     private final Configuration challengeConfig;
+    private final TemplateRenderer renderer;
 
     public UnionSqliHandler(UnionSqliService service, Configuration challengeConfig) {
         validate(service,challengeConfig);
         this.service = service;
         this.challengeConfig = challengeConfig;
+        this.renderer = new TemplateRenderer(challengeConfig);
     }
 
     @Override
     protected void doGet(HttpExchange exchange) throws IOException {
-        String html = new String(
-                readResource("/static/challenges/unionbasedsqli/unionsqli.html"),
-                StandardCharsets.UTF_8);
-        html = html.replace(challengeConfig.getString("challenge.htmlPlaceholder"),"" );
-        sendResponse(exchange,200,TEXT_HTML,html);
+        byte[] template = readResource("/static/challenges/challenge-template.html");
+        byte[] content  = readResource("/static/challenges/unionbasedsqli/content.html");
+        String rendered = renderer.render(template,content)
+                .replace("challenge.htmlPlaceholder", "");
+        sendResponse(exchange,200,TEXT_HTML,rendered);
     }
 
     @Override
@@ -47,12 +50,11 @@ public class UnionSqliHandler extends BaseHandler {
         List<Product> products = service.search(search);
 
         String results = renderProducts(products);
-
-        String html = new String(readResource("/static/challenges/unionbasedsqli/unionsqli.html"));
-
-        html = html.replace(challengeConfig.getString("challenge.htmlPlaceholder"), results);
-
-        sendResponse(exchange,200, TEXT_HTML, html);
+        byte[] template = readResource("/static/challenges/challenge-template.html");
+        byte[] content = readResource("/static/challenges/unionbasedsqli/content.html");
+        String rendered = renderer.render(template,content)
+                .replace(challengeConfig.getString("challenge.htmlPlaceholder"), results);
+        sendResponse(exchange,200, TEXT_HTML, rendered);
     }
 
     private String renderProducts(List<Product> products){

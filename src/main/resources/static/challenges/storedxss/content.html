@@ -1,0 +1,33 @@
+<div>
+    <table style="margin:20px;">
+        <tr>
+            <td><p style="margin: 15px 0; font-size:24px;">Welcome to the guestbook</p></td>
+        </tr>
+        <tr>
+            <td><p style="margin: 15px 0; font-size:18px;">Share, what's on your mind...</p></td>
+        </tr>
+        <form action="/storedxss/submit" method="post">
+            <tr>
+                <td>
+                    <input type="text" name="author" placeholder="Author" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="message" id="textarea" cols="50" rows="5" placeholder="Leave a message..." required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input style="width: 200px; height: 30px;" type="submit" name="submit" value="submit comment">
+                </td>
+            </tr>
+        </form>
+        <tr>
+            <td><hr style="width:100%; margin:20px 0;">
+                <p style="margin: 15px 0; font-size:18px;">{{message}}
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>

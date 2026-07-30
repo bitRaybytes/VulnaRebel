@@ -3,6 +3,7 @@ package challenge.storedxss;
 import com.sun.net.httpserver.HttpExchange;
 import config.Configuration;
 import exceptions.StoredXssHandlerException;
+import html.TemplateRenderer;
 import http.BaseHandler;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class StoredXssHandler extends BaseHandler {
     private final StoredXssService service;
     private final Configuration challengeConfig;
+    private final TemplateRenderer renderer;
 
     public StoredXssHandler(StoredXssService service, Configuration challengeConfig) {
         if (service == null){
@@ -39,6 +41,7 @@ public class StoredXssHandler extends BaseHandler {
         }
         this.service = service;
         this.challengeConfig = challengeConfig;
+        this.renderer = new TemplateRenderer(challengeConfig);
     }
 
 
@@ -53,9 +56,8 @@ public class StoredXssHandler extends BaseHandler {
         exchange.getResponseHeaders().add("Set-Cookie",
                 "flag=" + encoded + "; Path=/storedxss");
 
-        String html = new String(
-                readResource("/static/challenges/storedxss/storedxss.html"),
-                StandardCharsets.UTF_8);
+        byte[] template = readResource("/static/challenges/challenge-template.html");
+        byte[] content  = readResource("/static/challenges/storedxss/content.html");
 
         List<GuestbookEntry> messages = service.getComments();
 
@@ -72,10 +74,8 @@ public class StoredXssHandler extends BaseHandler {
                     .append("</div>");
         }
 
-        System.out.println("Entries: " + entries);
-        System.out.println("List: "+ messages);
-
-        String rendered = html.replace("{{message}}", entries.toString());
+        String rendered = renderer.render(template,content)
+                .replace("{{message}}",entries.toString());
         sendResponse(exchange, 200, TEXT_HTML, rendered);
     }
 

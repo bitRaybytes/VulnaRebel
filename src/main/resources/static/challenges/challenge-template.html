@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>VulnaRebel — SQL Injection</title>
+    <title>VulnaRebel – {{challenge.name}}</title>
+    <script>{{challenge.scripts}}</script>
     <style>
         *{font-family:helvetica; line-height:1.5;}
         li{font-size:18px;}
         body{
-            height:100dvh;
+            min-height:100dvh;
             display:flex;
             flex-direction:column;
             align-items:center;
@@ -19,16 +20,7 @@
             text-align:center;
             margin: 5px 0;
         }
-        .innerFormWrapper{
-            display:block;
-            justify-content:center;
-            min-height: 150px;
-            min-width: 500px;
-        }
-        .formWrapper{
-            display:flex;
-            justify-content:space-evenly;
-        }
+
         form{
         padding:10px;
             border:1px solid grey;
@@ -65,13 +57,13 @@
             flex-direction: column;
             align-items: center;
             width:100%;
-            padding; 20px 0;
+            padding: 20px 0;
         }
     </style>
 </head>
 <body>
     <nav style="display:flex; justify-content:center; align-items:center; width:100%;">
-        <div style="margin:0 10px; width:120px; display:flex; align-items:center;">
+        <div style="margin:0 10px; width:120px;">
             <b><a href="/challenges">VulnaRebel</a></b>
         </div>
         <ul style="display:flex; align-items:center; width:100%;
@@ -79,57 +71,40 @@
             <li><a href="/challenges">Challenges</a></li>
         </ul>
     </nav>
-    <h1>Welcome to the first challenge.</h1>
-    <h2>Login to reveal the flag.</h2>
+    <h1>{{challenge.name}}</h1>
+    <h2>{{challenge.subtitle}}</h2>
     <div style="display:flex; justify-content:center; align-items:center;">
         <div>
             <div style="min-width:500px; margin:20px 150px; border-radius:15px; border: 4px solid grey;
                     background-color:#212121; color:white;">
-                <div style="margin: 15px 10px;"><p><strong>Difficulty:</strong> <span style="color:#2E7D32;"><strong>Easy</strong></span></p></div>
+                <div style="margin: 15px 10px;"><p><strong>Difficulty:</strong> <span style="color:{{challenge.difficultyColor}};"><strong>{{challenge.difficulty}}</strong></span></p></div>
                 <div style="margin: 15px 10px;">
-                    <p >
+                    <p>
                         <strong>Objective:</strong><br>
-                        Investigate the login form for security weaknesses.
-                        Your goal is to gain access without knowing a valid username or password.
+                        {{challenge.objective}}
                     </p>
                 </div>
             </div>
         </div>
     </div>
     <div class="outerFormWrapper" >
-        <div class="innerFormWrapper">
-            <div class="formWrapper">
-                <form action="/login" method="post">
-                    <input type="text"     name="username" placeholder="Username">
-                    <input type="password" name="password" placeholder="Password">
-                    <div class="btnwrapper">
-                        <input type="submit"   class="button login"  value="login">
-                        <input type="reset" class="button reset" value="reset fields">
-                    </div>
-                </form>
-            </div>
-        </div>
+
+        {{challenge.content}}
+
         <div class="challengeHints">
             <div  class="hintsWrapper">
-                <a href="#" id="toggleForgot">Forgot password?</a>
+                <a href="#" id="openHints">Need a hint?</a>
                 <a href="#" id="toggleOff" style="margin-left:25px;">reset</a>
-                <p id="forgotPw" style="display:none">
-                    Find another way around. 😉
-                    <a href="#" id="toggleHint">Need a hint?</a>
-                </p>
                 <p id="hint" style="display:none">
-                    Think about escaping the syntax<br>
+                    {{challenge.hint.1}}
                     <a href="#" id="toggleMoreHint">More hints?</a>
                 </p>
                 <p id="moreHint" style="display:none">
-                    Let's suppose that this is a legitimate SaaS plattform where you have a valid profile.<br>
-                    Then there must be a query behind this form. <br>
+                    {{challenge.hint.2}}
                     <a href="#" id="toggleLastHint">Need one last more hint?</a>
                 </p>
                 <p id="lastHint" style="display:none">
-                    So a database query to this specific login form and architecture will be something close to this: <br>
-                    <code>SELECT * FROM login_users WHERE username&nbsp;=&nbsp;'YourUsername' AND password&nbsp;=&nbsp;'YourSuperSecretPassword';</code>
-                    <br>So the question is: how can you escape this?
+                    {{challenge.hint.3}}
                 </p>
             </div>
         </div>
@@ -139,36 +114,23 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('toggleForgot').addEventListener('click', function(e) {
+            document.getElementById('openHints').addEventListener('click', function(e) {
                 e.preventDefault();
-                document.getElementById('forgotPw').style.display = 'block';
+                document.getElementById('hint').style.display = 'block';
             });
-
             document.getElementById('toggleOff').addEventListener('click', function(e) {
                 e.preventDefault();
-                document.getElementById('forgotPw').style.display = 'none';
                 document.getElementById('hint').style.display = 'none';
                 document.getElementById('moreHint').style.display = 'none';
                 document.getElementById('lastHint').style.display = 'none';
             });
-
-            document.getElementById('toggleHint').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('hint').style.display = 'block';
-                document.getElementById('forgotPw').style.display = 'none';
-                document.getElementById('moreHint').style.display = 'none';
-                document.getElementById('lastHint').style.display = 'none';
-            });
-
             document.getElementById('toggleMoreHint').addEventListener('click', function(e) {
                 e.preventDefault();
                 document.getElementById('hint').style.display = 'none';
                 document.getElementById('moreHint').style.display = 'block';
             });
-
             document.getElementById('toggleLastHint').addEventListener('click', function(e) {
                 e.preventDefault();
-                document.getElementById('hint').style.display = 'none';
                 document.getElementById('moreHint').style.display = 'none';
                 document.getElementById('lastHint').style.display = 'block';
             });

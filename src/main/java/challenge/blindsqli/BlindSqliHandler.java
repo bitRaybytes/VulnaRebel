@@ -3,6 +3,7 @@ package challenge.blindsqli;
 import com.sun.net.httpserver.HttpExchange;
 import config.Configuration;
 import exceptions.BlindSqliServiceException;
+import html.TemplateRenderer;
 import http.BaseHandler;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class BlindSqliHandler extends BaseHandler {
     private final BlindSqliService service;
     private final Configuration challengeConfig;
+    private final TemplateRenderer renderer;
 
     /**
      * @param service To check user input
@@ -33,14 +35,16 @@ public class BlindSqliHandler extends BaseHandler {
     public BlindSqliHandler(BlindSqliService service, Configuration challengeConfig) {
         this.service = service;
         this.challengeConfig = challengeConfig;
+        this.renderer = new TemplateRenderer(challengeConfig);
     }
 
     @Override
     protected void doGet(HttpExchange exchange) throws IOException {
-        byte[] htmlBytes = readResource("/static/challenges/blindsqli/blindsqli.html");
-        String html = new String(htmlBytes, StandardCharsets.UTF_8);
-        String result = html.replace(challengeConfig.getString("challenge.htmlPlaceholder"), "");
-        sendResponse(exchange,200,TEXT_HTML,result);
+        byte[] template = readResource("/static/challenges/challenge-template.html");
+        byte[] content  = readResource("/static/challenges/blindsqli/content.html");
+        String rendered = renderer.render(template,content)
+                .replace("{{resultDisplay}}","");
+        sendResponse(exchange,200,TEXT_HTML,rendered);
     }
 
     @Override
@@ -54,11 +58,12 @@ public class BlindSqliHandler extends BaseHandler {
                     ? "<span style='color:green;'>User found.</span>"
                     : "<span style='color:red;'>User not found.</span>";
 
-            byte[] htmlBytes = readResource("/static/challenges/blindsqli/blindsqli.html");
-            String html = new String(htmlBytes, StandardCharsets.UTF_8)
+            byte[] template = readResource("/static/challenges/challenge-template.html");
+            byte[] content  = readResource("/static/challenges/blindsqli/content.html");
+            String rendererd = renderer.render(template,content)
                     .replace(challengeConfig.getString("challenge.htmlPlaceholder"), queryResult);
 
-            sendResponse(exchange, 200, TEXT_HTML, html);
+            sendResponse(exchange, 200, TEXT_HTML, rendererd);
         }  catch (BlindSqliServiceException e) {
             sendResponse(exchange, 500, TEXT_PLAIN, "Something went wrong.");
          }

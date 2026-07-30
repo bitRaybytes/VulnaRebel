@@ -1,0 +1,23 @@
+<div style="display:block; justify-content:center; min-height: 150px; min-width: 500px;">
+    <div style="display: flex; justify-content: space-evenly;">
+        <form action="/blindsqli" method="post">
+            <input type="text" name="username" placeholder="Search for user...">
+            <div class="btnwrapper">
+                <input type="submit" class="button" value="Search">
+            </div>
+        </form>
+    </div>
+</div>
+<div style="margin:20px;">
+    {{resultDisplay}}
+</div>
+<!-- Flag submission -->
+<div class="submitSection">
+    <p style="margin-bottom:10px;">Found the secret? Submit it here:</p>
+    <form action="/blindsqli/submit" method="post">
+        <input type="text" name="flag" placeholder="ctf{...}">
+        <div class="btnwrapper" style="margin-top:5px;">
+            <input type="submit" class="button" value="Submit">
+        </div>
+    </form>
+</div>
