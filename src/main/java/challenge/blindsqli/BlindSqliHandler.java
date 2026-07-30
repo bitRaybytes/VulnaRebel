@@ -61,7 +61,7 @@ public class BlindSqliHandler extends BaseHandler {
             byte[] template = readResource("/static/challenges/challenge-template.html");
             byte[] content  = readResource("/static/challenges/blindsqli/content.html");
             String rendererd = renderer.render(template,content)
-                    .replace(challengeConfig.getString("challenge.htmlPlaceholder"), queryResult);
+                    .replace("{{resultDisplay}}", queryResult);
 
             sendResponse(exchange, 200, TEXT_HTML, rendererd);
         }  catch (BlindSqliServiceException e) {

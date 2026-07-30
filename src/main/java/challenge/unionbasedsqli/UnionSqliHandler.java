@@ -7,7 +7,6 @@ import html.TemplateRenderer;
 import http.BaseHandler;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ public class UnionSqliHandler extends BaseHandler {
         byte[] template = readResource("/static/challenges/challenge-template.html");
         byte[] content  = readResource("/static/challenges/unionbasedsqli/content.html");
         String rendered = renderer.render(template,content)
-                .replace("challenge.htmlPlaceholder", "");
+                .replace(challengeConfig.getString("challenge.htmlPlaceholder"), "");
         sendResponse(exchange,200,TEXT_HTML,rendered);
     }
 
