@@ -55,6 +55,8 @@ public final class TemplateRenderer {
      * @return the fully rendered HTML page
      */
     public String render(byte[] template, byte[] content) {
+        validateTemplate(template);
+        validateContent(content);
         String composed = new String(template, StandardCharsets.UTF_8)
                 .replace("{{challenge.content}}",
                         new String(content, StandardCharsets.UTF_8));
@@ -128,6 +130,24 @@ public final class TemplateRenderer {
         }
         matcher.appendTail(result);
         return result.toString();
+    }
+
+    private void validateTemplate(byte[] template) {
+        if (template == null || template.length == 0) {
+            throw new TemplateRendererException(
+                    getClass().getName() +
+                            ": Template cannot be null or empty."
+            );
+        }
+    }
+
+    private void validateContent(byte[] content) {
+        if (content == null || content.length == 0) {
+            throw new TemplateRendererException(
+                    getClass().getName() +
+                            ": Content cannot be null or empty."
+            );
+        }
     }
 
 }
