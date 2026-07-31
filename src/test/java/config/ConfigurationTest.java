@@ -1,6 +1,7 @@
 package config;
 
 import exceptions.ConfigurationException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -26,6 +27,18 @@ public class ConfigurationTest {
         assertThrows(
                 ConfigurationException.class,
                 () -> new Configuration(createProperties())
+        );
+    }
+
+    @Test
+    @DisplayName("constructor rejects empty properties")
+    void constructorRejectsEmptyProperties(){
+
+        Properties props = new Properties();
+
+        assertThrows(
+                ConfigurationException.class,
+                () -> new Configuration(props)
         );
     }
 
