@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 public class Main {
-    static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         // config
         Configuration appConfig = ConfigurationLoader.load("application.properties");
 
