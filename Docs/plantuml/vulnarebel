@@ -1,0 +1,330 @@
+@startuml
+
+class article.ArticleCard {
+	{field} -description : String
+	{field} -route : String
+	{field} -title : String
+	{method} +description () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +route () : String
+	{method} +title () : String
+	{method} +toString () : String
+}
+
+
+class article.ResourceHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class article.ResourceIndexHandler {
+	{method} -buildCards () : String
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+abstract class challenge.Challenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +config () : config.Configuration
+	{method} +initialize () : void
+	{method}  {abstract} +routes () : java.util.List
+}
+
+
+class challenge.ChallengesHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.blindsqli.BlindSqliChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +initialize () : void
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.blindsqli.BlindSqliHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.blindsqli.BlindSqliService {
+	{method} +searchAttempt ( paramString1 : String ) : boolean
+}
+
+
+class challenge.blindsqli.BlindSqliSubmitHandler {
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.loginsqli.LoginSqliChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +initialize () : void
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.loginsqli.LoginSqliHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} -validate ( paramLoginSqliService1 : challenge.loginsqli.LoginSqliService , paramConfiguration2 : config.Configuration ) : void
+}
+
+
+class challenge.loginsqli.LoginSqliService {
+	{method} +attemptLogin ( paramString1 : String , paramString2 : String ) : boolean
+}
+
+
+class challenge.reconnaissance.ReconnaissanceChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.reconnaissance.ReconnaissanceHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.reconnaissance.ReconnaissanceSubmitHandler {
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.reflectedxss.ReflectedXssChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.reflectedxss.ReflectedXssHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.storedxss.GuestbookEntry {
+	{field} -author : String
+	{field} -message : String
+	{method} +author () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +message () : String
+	{method} +toString () : String
+}
+
+
+class challenge.storedxss.StoredXssChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +initialize () : void
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.storedxss.StoredXssHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+}
+
+
+class challenge.storedxss.StoredXssService {
+	{method} +getComments () : java.util.List
+	{method} +saveMessage ( paramString1 : String , paramString2 : String ) : void
+}
+
+
+class challenge.unionbasedsqli.Product {
+	{field} -category : String
+	{field} -description : String
+	{field} -name : String
+	{field} -price : int
+	{method} +category () : String
+	{method} +description () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +name () : String
+	{method} +price () : int
+	{method} +toString () : String
+}
+
+
+class challenge.unionbasedsqli.UnionSqliChallenge {
+	{method} +articleCard () : java.util.Optional
+	{method} +initialize () : void
+	{method} +routes () : java.util.List
+}
+
+
+class challenge.unionbasedsqli.UnionSqliHandler {
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} -renderProducts ( paramList1 : java.util.List ) : String
+	{method} -validate ( paramUnionSqliService1 : challenge.unionbasedsqli.UnionSqliService , paramConfiguration2 : config.Configuration ) : void
+}
+
+
+class challenge.unionbasedsqli.UnionSqliService {
+	{method} +search ( paramString1 : String ) : java.util.List
+}
+
+
+class config.Configuration {
+	{field} -properties : java.util.Properties
+	{method} +entries () : java.util.Map
+	{method} +getBoolean ( paramString1 : String ) : boolean
+	{method} +getInt ( paramString1 : String ) : int
+	{method} +getString ( paramString1 : String ) : String
+	{method} -validateKey ( paramString1 : String ) : void
+	{method} -validatePropertyKey ( paramString1 : String ) : void
+}
+
+
+class config.ConfigurationLoader {
+	{method}  {static} +load ( paramString1 : String ) : config.Configuration
+	{method}  {static} -validateResource ( paramString1 : String ) : void
+}
+
+
+class core.Application {
+	{field} {static} -LOG : java.util.logging.Logger
+	{method} +start () : void
+	{method} +stop () : void
+	{method} -validate ( paramVulnaHttpServer1 : http.VulnaHttpServer , paramRouter2 : http.Router ) : void
+}
+
+
+class core.Main {
+	{method}  {static} +main ( paramString;1 : [Ljava.lang.String; ) : void
+}
+
+
+class database.DatabaseManager {
+	{field} {static} -LOGGER : java.util.logging.Logger
+	{method} +getConnection () : java.sql.Connection
+}
+
+
+class database.SchemaInitializer {
+	{method} -executeSqlFile ( paramConnection1 : java.sql.Connection , paramString2 : String ) : void
+	{method} +initialize ( paramString1 : String ) : void
+}
+
+
+class html.TemplateRenderer {
+	{method} -applyInlineFormatting ( paramString1 : String ) : String
+	{method} +render ( param[B1 : [B ) : String
+	{method} +render ( param[B1 : [B , param[B2 : [B ) : String
+	{method} -renderString ( paramString1 : String ) : String
+	{method} -validateContent ( param[B1 : [B ) : void
+	{method} -validateTemplate ( param[B1 : [B ) : void
+}
+
+
+abstract class http.BaseHandler {
+	{field} {static} -LOGGER : java.util.logging.Logger
+	{field} {static} #TEXT_HTML : String
+	{field} {static} #TEXT_PLAIN : String
+	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #doPost ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} +handle ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} #parseUrlEncodedData ( paramString1 : String ) : java.util.Map
+	{method} #readBody ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : String
+	{method} #readResource ( paramString1 : String ) : [B
+	{method} #sendResponse ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange , paramint2 : int , paramString3 : String , paramString4 : String ) : void
+	{method} #sendResponse ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange , paramint2 : int , paramString3 : String , param[B4 : [B ) : void
+	{method} -validateBody ( paramString1 : String ) : void
+	{method} -validateBody ( param[B1 : [B ) : void
+	{method} -validateClassPath ( paramString1 : String ) : void
+	{method} -validateContentType ( paramString1 : String ) : void
+	{method} -validateExchange ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
+	{method} -validateStatuscode ( paramint1 : int ) : void
+}
+
+
+class http.Route {
+	{field} -handler : com.sun.net.httpserver.HttpHandler
+	{field} -path : String
+	{method} -validateHandler ( paramHttpHandler1 : com.sun.net.httpserver.HttpHandler ) : void
+	{method} -validatePath ( paramString1 : String ) : void
+}
+
+
+class http.Router {
+	{method} +register ( paramRoute1 : http.Route ) : void
+}
+
+
+class http.VulnaHttpServer {
+	{field} {static} -LOGGER : java.util.logging.Logger
+	{field} -delay : int
+	{field} -server : com.sun.net.httpserver.HttpServer
+	{method} +addContext ( paramString1 : String , paramHttpHandler2 : com.sun.net.httpserver.HttpHandler ) : void
+	{method} +applyRoutes ( paramRouter1 : http.Router ) : void
+	{method} +start () : void
+	{method} +stop () : void
+}
+
+
+
+
+article.ResourceHandler *--  html.TemplateRenderer : renderer
+article.ResourceHandler --|>  http.BaseHandler
+article.ResourceIndexHandler "1" o-- "0..*"  article.ArticleCard : cards
+article.ResourceIndexHandler --|>  http.BaseHandler
+challenge.Challenge *--  config.Configuration : config
+challenge.ChallengesHandler --|>  http.BaseHandler
+challenge.blindsqli.BlindSqliChallenge *--  config.Configuration : articleConfig
+challenge.blindsqli.BlindSqliChallenge *--  database.DatabaseManager : dbManager
+challenge.blindsqli.BlindSqliChallenge --|>  challenge.Challenge
+challenge.blindsqli.BlindSqliHandler *--  challenge.blindsqli.BlindSqliService : service
+challenge.blindsqli.BlindSqliHandler *--  config.Configuration : challengeConfig
+challenge.blindsqli.BlindSqliHandler *--  html.TemplateRenderer : renderer
+challenge.blindsqli.BlindSqliHandler --|>  http.BaseHandler
+challenge.blindsqli.BlindSqliService *--  database.DatabaseManager : manager
+challenge.blindsqli.BlindSqliSubmitHandler *--  config.Configuration : challengeConfig
+challenge.blindsqli.BlindSqliSubmitHandler --|>  http.BaseHandler
+challenge.loginsqli.LoginSqliChallenge *--  config.Configuration : articleConfig
+challenge.loginsqli.LoginSqliChallenge *--  database.DatabaseManager : dbManager
+challenge.loginsqli.LoginSqliChallenge --|>  challenge.Challenge
+challenge.loginsqli.LoginSqliHandler *--  challenge.loginsqli.LoginSqliService : service
+challenge.loginsqli.LoginSqliHandler *--  config.Configuration : challengeConfig
+challenge.loginsqli.LoginSqliHandler *--  html.TemplateRenderer : renderer
+challenge.loginsqli.LoginSqliHandler --|>  http.BaseHandler
+challenge.loginsqli.LoginSqliService *--  database.DatabaseManager : manager
+challenge.reconnaissance.ReconnaissanceChallenge *--  config.Configuration : articleConfig
+challenge.reconnaissance.ReconnaissanceChallenge --|>  challenge.Challenge
+challenge.reconnaissance.ReconnaissanceHandler --|>  http.BaseHandler
+challenge.reconnaissance.ReconnaissanceSubmitHandler *--  config.Configuration : challengeConfig
+challenge.reconnaissance.ReconnaissanceSubmitHandler --|>  http.BaseHandler
+challenge.reflectedxss.ReflectedXssChallenge *--  config.Configuration : articleConfig
+challenge.reflectedxss.ReflectedXssChallenge --|>  challenge.Challenge
+challenge.reflectedxss.ReflectedXssHandler *--  html.TemplateRenderer : renderer
+challenge.reflectedxss.ReflectedXssHandler --|>  http.BaseHandler
+challenge.storedxss.StoredXssChallenge *--  config.Configuration : articleConfig
+challenge.storedxss.StoredXssChallenge *--  database.DatabaseManager : manager
+challenge.storedxss.StoredXssChallenge --|>  challenge.Challenge
+challenge.storedxss.StoredXssHandler *--  challenge.storedxss.StoredXssService : service
+challenge.storedxss.StoredXssHandler *--  config.Configuration : challengeConfig
+challenge.storedxss.StoredXssHandler *--  html.TemplateRenderer : renderer
+challenge.storedxss.StoredXssHandler --|>  http.BaseHandler
+challenge.storedxss.StoredXssService *--  database.DatabaseManager : manager
+challenge.unionbasedsqli.UnionSqliChallenge *--  config.Configuration : articleConfig
+challenge.unionbasedsqli.UnionSqliChallenge *--  database.DatabaseManager : manager
+challenge.unionbasedsqli.UnionSqliChallenge --|>  challenge.Challenge
+challenge.unionbasedsqli.UnionSqliHandler *--  challenge.unionbasedsqli.UnionSqliService : service
+challenge.unionbasedsqli.UnionSqliHandler *--  config.Configuration : challengeConfig
+challenge.unionbasedsqli.UnionSqliHandler *--  html.TemplateRenderer : renderer
+challenge.unionbasedsqli.UnionSqliHandler --|>  http.BaseHandler
+challenge.unionbasedsqli.UnionSqliService *--  database.DatabaseManager : manager
+core.Application *--  http.Router : router
+core.Application *--  http.VulnaHttpServer : server
+database.DatabaseManager *--  config.Configuration : config
+database.SchemaInitializer *--  database.DatabaseManager : manager
+html.TemplateRenderer *--  config.Configuration : config
+http.Router "1" o-- "0..*"  http.Route : routes
+
+
+@enduml

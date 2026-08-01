@@ -1,0 +1,333 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+skinparam groupInheritance 2
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundCorner 12
+
+skinparam package {
+    BorderColor #455A64
+    FontColor #263238
+}
+
+skinparam class {
+    BackgroundColor White
+    BorderColor #546E7A
+}
+package core #81C784{
+    class Application {
+    	{field} {static} -LOG : Logger
+    	{method} +start () : void
+    	{method} +stop () : void
+    }
+
+    class Main {
+    	{method}  {static} +main ( paramString;1 : String[] ) : void
+    }
+}
+
+
+package config #64B5F6{
+    class Configuration {
+    	{field} -properties : Properties
+    	{method} +entries () : Map
+    	{method} +getBoolean ( paramString1 : String ) : boolean
+    	{method} +getInt ( paramString1 : String ) : int
+    	{method} +getString ( paramString1 : String ) : String
+    }
+
+
+    class ConfigurationLoader {
+    	{method}  {static} +load ( paramString1 : String ) : Configuration
+
+    }
+}
+
+
+package database #A1887F{
+    class DatabaseManager {
+    	{field} {static} -LOGGER : Logger
+    	{method} +getConnection () : Connection
+    }
+
+    class SchemaInitializer {
+    	{method} -executeSqlFile ( paramConnection1 : Connection , paramString2 : String ) : void
+    	{method} +initialize ( paramString1 : String ) : void
+    }
+}
+
+
+package challenge #EF9A9A{
+    abstract class Challenge {
+    	{method} +articleCard () : Optional
+    	{method} +config () : Configuration
+    	{method} +initialize () : void
+    	{method}  {abstract} +routes () : List
+    }
+
+    class ChallengesHandler {
+    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    }
+
+    package challenge.loginsqli #E57373{
+        class LoginSqliChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +initialize () : void
+        	{method} +routes () : List
+        }
+
+        class LoginSqliHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+
+        class LoginSqliService {
+        	{method} +attemptLogin ( paramString1 : String , paramString2 : String ) : boolean
+        }
+    }
+
+    package challenge.reflectedxss #BA68C8{
+        class ReflectedXssChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +routes () : List
+        }
+
+
+        class ReflectedXssHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        }
+    }
+    package challenge.reconnaissance #4DB6AC{
+        class ReconnaissanceChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +routes () : List
+        }
+
+
+        class ReconnaissanceHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        }
+
+
+        class ReconnaissanceSubmitHandler {
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+    }
+
+    package challenge.storedxss #9575CD{
+        class GuestbookEntry {
+        	{field} -author : String
+        	{field} -message : String
+        	{method} +author () : String
+        	{method} +equals ( paramObject1 : Object ) : boolean
+        	{method} +hashCode () : int
+        	{method} +message () : String
+        	{method} +toString () : String
+        }
+        class StoredXssChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +initialize () : void
+        	{method} +routes () : List
+        }
+
+
+        class StoredXssHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+
+
+        class StoredXssService {
+        	{method} +getComments () : List
+        	{method} +saveMessage ( paramString1 : String , paramString2 : String ) : void
+        }
+    }
+
+    package challenge.unionsqli #FFB74D{
+        class Product {
+        	{field} -category : String
+        	{field} -description : String
+        	{field} -name : String
+        	{field} -price : int
+        	{method} +category () : String
+        	{method} +description () : String
+        	{method} +equals ( paramObject1 : Object ) : boolean
+        	{method} +hashCode () : int
+        	{method} +name () : String
+        	{method} +price () : int
+        	{method} +toString () : String
+        }
+        class UnionSqliChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +initialize () : void
+        	{method} +routes () : List
+        }
+
+
+        class UnionSqliHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+
+
+        class UnionSqliService {
+        	{method} +search ( paramString1 : String ) : List
+        }
+    }
+
+
+
+    package challenge.blindsqli #FF8A65{
+        class BlindSqliChallenge {
+        	{method} +articleCard () : Optional
+        	{method} +initialize () : void
+        	{method} +routes () : List
+        }
+
+
+        class BlindSqliHandler {
+        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+
+
+        class BlindSqliService {
+        	{method} +searchAttempt ( paramString1 : String ) : boolean
+        }
+
+
+        class BlindSqliSubmitHandler {
+        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        }
+    }
+}
+
+package article #FFF176{
+    class ArticleCard {
+    	{field} -description : String
+    	{field} -route : String
+    	{field} -title : String
+    	{method} +description () : String
+    	{method} +equals ( paramObject1 : Object ) : boolean
+    	{method} +hashCode () : int
+    	{method} +route () : String
+    	{method} +title () : String
+    	{method} +toString () : String
+    }
+
+    class ResourceHandler {
+    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    }
+
+    class ResourceIndexHandler {
+    	{method} -buildCards () : String
+    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    }
+}
+
+package html #CFD8DC{
+    class html.TemplateRenderer {
+        {method} +render ( param[B1 : byte[] ) : String
+    	{method} +render ( param[B1 : byte[] , param[B2 : byte[] ) : String
+    }
+}
+
+
+
+package http #90CAF9{
+
+    abstract class BaseHandler {
+    	{field} {static} -LOGGER : Logger
+    	{field} {static} #TEXT_HTML : String
+    	{field} {static} #TEXT_PLAIN : String
+    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} +handle ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} #parseUrlEncodedData ( paramString1 : String ) : Map
+    	{method} #readBody ( paramHttpExchange1 : HttpExchange ) : String
+    	{method} #readResource ( paramString1 : String ) : byte[]
+    	{method} #sendResponse ( paramHttpExchange1 : HttpExchange , paramint2 : int , paramString3 : String , paramString4 : String ) : void
+    	{method} #sendResponse ( paramHttpExchange1 : HttpExchange , paramint2 : int , paramString3 : String , param[B4 : byte[] ) : void
+
+    }
+
+    class VulnaHttpServer {
+    	{field} {static} -LOGGER : Logger
+    	{field} -delay : int
+    	{field} -server : HttpServer
+    	{method} +addContext ( paramString1 : String , paramHttpHandler2 : HttpHandler ) : void
+    	{method} +applyRoutes ( paramRouter1 : Router ) : void
+    	{method} +start () : void
+    	{method} +stop () : void
+    }
+
+    class Route {
+    	{field} -handler : HttpHandler
+    	{field} -path : String
+    }
+
+
+    class Router {
+    	{method} +register ( paramRoute1 : Route ) : void
+    }
+}
+
+Application *--  Router : router
+Application *--  VulnaHttpServer : server
+BlindSqliChallenge *--  Configuration : articleConfig
+BlindSqliChallenge *--  DatabaseManager : dbManager
+BlindSqliChallenge --|>  Challenge
+BlindSqliHandler *--  BlindSqliService : service
+BlindSqliHandler *--  Configuration : challengeConfig
+BlindSqliHandler *--  TemplateRenderer : renderer
+BlindSqliHandler --|>  BaseHandler
+BlindSqliService *--  DatabaseManager : manager
+BlindSqliSubmitHandler *--  Configuration : challengeConfig
+BlindSqliSubmitHandler --|>  BaseHandler
+Challenge *--  Configuration : config
+ChallengesHandler --|>  BaseHandler
+DatabaseManager *--  Configuration : config
+LoginSqliChallenge *--  Configuration : articleConfig
+LoginSqliChallenge *--  DatabaseManager : dbManager
+LoginSqliChallenge --|>  Challenge
+LoginSqliHandler *--  Configuration : challengeConfig
+LoginSqliHandler *--  LoginSqliService : service
+LoginSqliHandler *--  TemplateRenderer : renderer
+LoginSqliHandler --|>  BaseHandler
+LoginSqliService *--  DatabaseManager : manager
+ReconnaissanceChallenge *--  Configuration : articleConfig
+ReconnaissanceChallenge --|>  Challenge
+ReconnaissanceHandler --|>  BaseHandler
+ReconnaissanceSubmitHandler *--  Configuration : challengeConfig
+ReconnaissanceSubmitHandler --|>  BaseHandler
+ReflectedXssChallenge *--  Configuration : articleConfig
+ReflectedXssChallenge --|>  Challenge
+ReflectedXssHandler *--  TemplateRenderer : renderer
+ReflectedXssHandler --|>  BaseHandler
+ResourceHandler *--  TemplateRenderer : renderer
+ResourceHandler --|>  BaseHandler
+ResourceIndexHandler "1" o-- "0..*"  ArticleCard : cards
+ResourceIndexHandler --|>  BaseHandler
+Router "1" o-- "0..*"  Route : routes
+SchemaInitializer *--  DatabaseManager : manager
+StoredXssChallenge *--  Configuration : articleConfig
+StoredXssChallenge *--  DatabaseManager : manager
+StoredXssChallenge --|>  Challenge
+StoredXssHandler *--  Configuration : challengeConfig
+StoredXssHandler *--  StoredXssService : service
+StoredXssHandler *--  TemplateRenderer : renderer
+StoredXssHandler --|>  BaseHandler
+StoredXssService *--  DatabaseManager : manager
+TemplateRenderer *--  Configuration : config
+UnionSqliChallenge *--  Configuration : articleConfig
+UnionSqliChallenge *--  DatabaseManager : manager
+UnionSqliChallenge --|>  Challenge
+UnionSqliHandler *--  Configuration : challengeConfig
+UnionSqliHandler *--  TemplateRenderer : renderer
+UnionSqliHandler *--  UnionSqliService : service
+UnionSqliHandler --|>  BaseHandler
+UnionSqliService *--  DatabaseManager : manager
+
+
+@enduml
