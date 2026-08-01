@@ -25,11 +25,11 @@ import java.sql.SQLException;
  * safe to run on every application startup without duplicating data.
  * </p>
  * <p>
- * Expected classpath layout for a challenge named {@code login}:
+ * Expected classpath layout for a challenge named {@code loginsqli}:
  * </p>
  * <pre>
- * src/main/resources/challenges/login/schema.sql
- * src/main/resources/challenges/login/seed.sql
+ * src/main/resources/challenges/loginsqli/schema.sql
+ * src/main/resources/challenges/loginsqli/seed.sql
  * </pre>
  */
 public class SchemaInitializer {
@@ -62,9 +62,9 @@ public class SchemaInitializer {
      * </p>
      *
      * @param challengeName the challenge folder name used to resolve
-     *                      SQL file paths, e.g. {@code "login"} resolves
-     *                      to {@code challenges/login/schema.sql}
-     *                      and {@code challenges/login/seed.sql}
+     *                      SQL file paths, e.g. {@code "loginsqli"} resolves
+     *                      to {@code challenges/loginsqli/schema.sql}
+     *                      and {@code challenges/loginsqli/seed.sql}
      * @throws SchemaInitializerException if {@code challengeName} is null
      *                                    or blank, if either SQL file is
      *                                    not found on the classpath,

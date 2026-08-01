@@ -22,7 +22,7 @@ public class RouterTest {
         Router router = new Router();
 
         Route route =
-                new Route("/login", new DummyHandler());
+                new Route("/loginsqli", new DummyHandler());
 
         router.register(route);
 
@@ -47,13 +47,13 @@ public class RouterTest {
         Router router = new Router();
 
         router.register(
-                new Route("/login", new DummyHandler())
+                new Route("/loginsqli", new DummyHandler())
         );
 
         assertThrows(
                 RouterException.class,
                 () -> router.register(
-                        new Route("/login", new DummyHandler())
+                        new Route("/loginsqli", new DummyHandler())
                 )
         );
     }
@@ -64,7 +64,7 @@ public class RouterTest {
         Router router = new Router();
 
         Route login =
-                new Route("/login", new DummyHandler());
+                new Route("/loginsqli", new DummyHandler());
 
         Route search =
                 new Route("/search", new DummyHandler());
@@ -85,7 +85,7 @@ public class RouterTest {
         Router router = new Router();
 
         router.register(
-                new Route("/login", new DummyHandler())
+                new Route("/loginsqli", new DummyHandler())
         );
 
         List<Route> routes = router.getRoutes();

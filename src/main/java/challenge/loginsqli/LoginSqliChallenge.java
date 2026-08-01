@@ -29,7 +29,7 @@ public class LoginSqliChallenge extends Challenge {
     private final Configuration articleConfig;
 
     /**
-     * Challenge module for the SQL Injection login challenge.
+     * Challenge module for the SQL Injection loginsqli challenge.
      * <p>
      * Loads its own {@link Configuration} from
      * {@code challenges/loginsqli/challenge.properties} and

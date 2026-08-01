@@ -8,7 +8,6 @@ import html.TemplateRenderer;
 import http.BaseHandler;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -32,7 +31,7 @@ public class LoginSqliHandler extends BaseHandler {
     @Override
     protected void doGet(HttpExchange exchange) throws IOException {
         byte[] template = readResource("/static/challenges/challenge-template.html");
-        byte[] content = readResource("/static/challenges/login/content.html");
+        byte[] content = readResource("/static/challenges/loginsqli/content.html");
         String rendered = renderer.render(template, content)
                 .replace("{{queryResult}}", "");
         sendResponse(exchange, 200, TEXT_HTML, rendered);

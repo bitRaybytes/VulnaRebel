@@ -39,7 +39,7 @@ public class RouteTest {
         @DisplayName("throws when path does not start with slash")
         void throwsWhenPathMissingLeadingSlash() {
             assertThrows(RouteException.class,
-                    () -> new Route("login", dummyHandler));
+                    () -> new Route("loginsqli", dummyHandler));
         }
     }
 
@@ -62,7 +62,7 @@ public class RouteTest {
         @Test
         @DisplayName("constructs with valid path and handler")
         void constructsWithValidArgs() {
-            assertDoesNotThrow(() -> new Route("/login", dummyHandler));
+            assertDoesNotThrow(() -> new Route("/loginsqli", dummyHandler));
         }
 
         @Test
@@ -86,14 +86,14 @@ public class RouteTest {
         @Test
         @DisplayName("getPath returns the path provided at construction")
         void getPathReturnsConstructedPath() {
-            Route route = new Route("/login", dummyHandler);
-            assertEquals("/login", route.getPath());
+            Route route = new Route("/loginsqli", dummyHandler);
+            assertEquals("/loginsqli", route.getPath());
         }
 
         @Test
         @DisplayName("getHandler returns the handler provided at construction")
         void getHandlerReturnsConstructedHandler() {
-            Route route = new Route("/login", dummyHandler);
+            Route route = new Route("/loginsqli", dummyHandler);
             assertSame(dummyHandler, route.getHandler());
         }
 
@@ -114,7 +114,7 @@ public class RouteTest {
         @Test
         @DisplayName("path does not change between calls")
         void pathIsStable() {
-            Route route = new Route("/login", dummyHandler);
+            Route route = new Route("/loginsqli", dummyHandler);
             String first  = route.getPath();
             String second = route.getPath();
             assertEquals(first, second);
@@ -123,7 +123,7 @@ public class RouteTest {
         @Test
         @DisplayName("handler does not change between calls")
         void handlerIsStable() {
-            Route route = new Route("/login", dummyHandler);
+            Route route = new Route("/loginsqli", dummyHandler);
             assertSame(route.getHandler(), route.getHandler());
         }
     }
