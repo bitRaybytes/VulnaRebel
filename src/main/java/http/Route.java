@@ -32,8 +32,8 @@ public class Route {
     }
 
     /**
-     * Returns the path of the {@code Route} object.
-     * @return
+     * The Path of a resource.
+     * @return the path of a resource
      */
     public String getPath() {
         return path;
@@ -57,6 +57,10 @@ public class Route {
             throw new RouteException(
                     getClass().getName() +
                             ": Path cannot be empty.");
+        }
+        if (!path.startsWith("/")) {
+            throw new RouteException(
+                    getClass().getName() + ": Path must start with '/'.");
         }
     }
 }
