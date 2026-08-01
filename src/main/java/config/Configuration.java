@@ -30,6 +30,11 @@ public class Configuration {
 
 
     /**
+     * Constructs a {@code Configuration} object.
+     * <p>
+     *     Requires a property file as a resource for the application itself,
+     *     a challenge or a challenge-specific article.
+     * </p>
      * @param properties the populated {@link Properties} object to wrap
      * @throws ConfigurationException if {@code properties} is null or empty
      */
@@ -37,13 +42,13 @@ public class Configuration {
         if (properties == null){
             throw new ConfigurationException(
                     getClass().getName() +
-                            ": Property might be null.");
+                            ": Property cannot be null.");
         }
 
         if (properties.isEmpty()){
             throw new ConfigurationException(
                     getClass().getName() +
-                            ": Property might be empty.");
+                            ": Property cannot be empty.");
         }
         this.properties = properties;
     }
