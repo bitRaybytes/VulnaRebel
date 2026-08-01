@@ -37,11 +37,40 @@
                     <target>21</target>
                 </configuration>
             </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.5</version>
-                </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.5</version>
+            </plugin>
+            <plugin>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <groupId>de.elnarion.maven</groupId>
+                <version>3.0.1</version>
+                <configuration>
+                    <outputFilename>vulnarebel.puml</outputFilename>
+                    <outputDirectory>${project.basedir}/Docs/plantuml</outputDirectory>
+                    <scanPackages>
+                        <scanPackage>challenge</scanPackage>
+                        <scanPackage>http</scanPackage>
+                        <scanPackage>database</scanPackage>
+                        <scanPackage>config</scanPackage>
+                        <scanPackage>html</scanPackage>
+                        <scanPackage>article</scanPackage>
+                        <scanPackage>core</scanPackage>
+                    </scanPackages>
+                    <blacklistRegexp>.*Exception.*</blacklistRegexp>
+                    <hideFields>false</hideFields>
+                    <hideMethods>false</hideMethods>
+                    <useShortClassNames>true</useShortClassNames>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-vulnarebel-diagram</id>
+                        <goals><goal>generate</goal></goals>
+                        <phase>generate-test-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -77,6 +106,7 @@
             <version>5.23.0</version>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
