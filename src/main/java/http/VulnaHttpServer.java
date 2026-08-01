@@ -73,6 +73,12 @@ public class VulnaHttpServer {
       * @param router serves the routes
       */
     public void applyRoutes(Router router) {
+        if (router == null){
+            throw new VulnaHttpServerException(
+                    getClass().getName() +
+                            ": Router cannot be null."
+            );
+        }
         for (Route route : router.getRoutes()) {
             addContext(route.getPath(), route.getHandler());
         }
