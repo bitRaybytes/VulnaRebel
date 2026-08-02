@@ -3,18 +3,9 @@ left to right direction
 skinparam linetype ortho
 skinparam groupInheritance 2
 skinparam packageStyle rectangle
-skinparam shadowing false
+
 skinparam roundCorner 12
 
-skinparam package {
-    BorderColor #455A64
-    FontColor #263238
-}
-
-skinparam class {
-    BackgroundColor White
-    BorderColor #546E7A
-}
 package core #81C784{
     class Application {
     	{field} {static} -LOG : Logger
@@ -23,7 +14,7 @@ package core #81C784{
     }
 
     class Main {
-    	{method}  {static} +main ( paramString;1 : String[] ) : void
+    	{method}  {static} +main ( args : String[] ) : void
     }
 }
 
@@ -32,14 +23,14 @@ package config #64B5F6{
     class Configuration {
     	{field} -properties : Properties
     	{method} +entries () : Map
-    	{method} +getBoolean ( paramString1 : String ) : boolean
-    	{method} +getInt ( paramString1 : String ) : int
-    	{method} +getString ( paramString1 : String ) : String
+    	{method} +getBoolean ( key : String ) : boolean
+    	{method} +getInt ( key : String ) : int
+    	{method} +getString ( key : String ) : String
     }
 
 
     class ConfigurationLoader {
-    	{method}  {static} +load ( paramString1 : String ) : Configuration
+    	{method}  {static} +load ( ConfigurationLoader : String ) : Configuration
 
     }
 }
@@ -52,8 +43,8 @@ package database #A1887F{
     }
 
     class SchemaInitializer {
-    	{method} -executeSqlFile ( paramConnection1 : Connection , paramString2 : String ) : void
-    	{method} +initialize ( paramString1 : String ) : void
+    	{method} -executeSqlFile ( conn : Connection , path : String ) : void
+    	{method} +initialize ( challengeName : String ) : void
     }
 }
 
@@ -67,7 +58,7 @@ package challenge #EF9A9A{
     }
 
     class ChallengesHandler {
-    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} #doGet ( exchange : HttpExchange ) : void
     }
 
     package challenge.loginsqli #E57373{
@@ -78,12 +69,12 @@ package challenge #EF9A9A{
         }
 
         class LoginSqliHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
 
         class LoginSqliService {
-        	{method} +attemptLogin ( paramString1 : String , paramString2 : String ) : boolean
+        	{method} +attemptLogin ( username : String , password : String ) : boolean
         }
     }
 
@@ -95,7 +86,7 @@ package challenge #EF9A9A{
 
 
         class ReflectedXssHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
         }
     }
     package challenge.reconnaissance #4DB6AC{
@@ -106,12 +97,12 @@ package challenge #EF9A9A{
 
 
         class ReconnaissanceHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
         }
 
 
         class ReconnaissanceSubmitHandler {
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
     }
 
@@ -120,10 +111,7 @@ package challenge #EF9A9A{
         	{field} -author : String
         	{field} -message : String
         	{method} +author () : String
-        	{method} +equals ( paramObject1 : Object ) : boolean
-        	{method} +hashCode () : int
         	{method} +message () : String
-        	{method} +toString () : String
         }
         class StoredXssChallenge {
         	{method} +articleCard () : Optional
@@ -133,14 +121,14 @@ package challenge #EF9A9A{
 
 
         class StoredXssHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
 
 
         class StoredXssService {
         	{method} +getComments () : List
-        	{method} +saveMessage ( paramString1 : String , paramString2 : String ) : void
+        	{method} +saveMessage ( author : String , message : String ) : void
         }
     }
 
@@ -152,11 +140,8 @@ package challenge #EF9A9A{
         	{field} -price : int
         	{method} +category () : String
         	{method} +description () : String
-        	{method} +equals ( paramObject1 : Object ) : boolean
-        	{method} +hashCode () : int
         	{method} +name () : String
         	{method} +price () : int
-        	{method} +toString () : String
         }
         class UnionSqliChallenge {
         	{method} +articleCard () : Optional
@@ -166,13 +151,13 @@ package challenge #EF9A9A{
 
 
         class UnionSqliHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
 
 
         class UnionSqliService {
-        	{method} +search ( paramString1 : String ) : List
+        	{method} +search ( input : String ) : List
         }
     }
 
@@ -187,18 +172,18 @@ package challenge #EF9A9A{
 
 
         class BlindSqliHandler {
-        	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doGet ( exchange : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
 
 
         class BlindSqliService {
-        	{method} +searchAttempt ( paramString1 : String ) : boolean
+        	{method} +searchAttempt ( search : String ) : boolean
         }
 
 
         class BlindSqliSubmitHandler {
-        	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
+        	{method} #doPost ( exchange : HttpExchange ) : void
         }
     }
 }
@@ -209,27 +194,24 @@ package article #FFF176{
     	{field} -route : String
     	{field} -title : String
     	{method} +description () : String
-    	{method} +equals ( paramObject1 : Object ) : boolean
-    	{method} +hashCode () : int
     	{method} +route () : String
     	{method} +title () : String
-    	{method} +toString () : String
     }
 
     class ResourceHandler {
-    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} #doGet ( exchange : HttpExchange ) : void
     }
 
     class ResourceIndexHandler {
     	{method} -buildCards () : String
-    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
+    	{method} #doGet ( exchange : HttpExchange ) : void
     }
 }
 
 package html #CFD8DC{
     class html.TemplateRenderer {
-        {method} +render ( param[B1 : byte[] ) : String
-    	{method} +render ( param[B1 : byte[] , param[B2 : byte[] ) : String
+        {method} +render ( html : byte[] ) : String
+    	{method} +render ( template : byte[] , content : byte[] ) : String
     }
 }
 
@@ -241,14 +223,14 @@ package http #90CAF9{
     	{field} {static} -LOGGER : Logger
     	{field} {static} #TEXT_HTML : String
     	{field} {static} #TEXT_PLAIN : String
-    	{method} #doGet ( paramHttpExchange1 : HttpExchange ) : void
-    	{method} #doPost ( paramHttpExchange1 : HttpExchange ) : void
-    	{method} +handle ( paramHttpExchange1 : HttpExchange ) : void
-    	{method} #parseUrlEncodedData ( paramString1 : String ) : Map
-    	{method} #readBody ( paramHttpExchange1 : HttpExchange ) : String
-    	{method} #readResource ( paramString1 : String ) : byte[]
-    	{method} #sendResponse ( paramHttpExchange1 : HttpExchange , paramint2 : int , paramString3 : String , paramString4 : String ) : void
-    	{method} #sendResponse ( paramHttpExchange1 : HttpExchange , paramint2 : int , paramString3 : String , param[B4 : byte[] ) : void
+    	{method} #doGet ( exchange : HttpExchange ) : void
+    	{method} #doPost ( exchange : HttpExchange ) : void
+    	{method} +handle ( exchange : HttpExchange ) : void
+    	{method} #parseUrlEncodedData ( body : String ) : Map
+    	{method} #readBody ( exchange : HttpExchange ) : String
+    	{method} #readResource ( classPath : String ) : byte[]
+    	{method} #sendResponse ( exchange : HttpExchange , statusCode : int , contentType : String , body: String ) : void
+    	{method} #sendResponse ( exchange : HttpExchange , statusCode : int , contentType : String , body : byte[] ) : void
 
     }
 
@@ -256,8 +238,8 @@ package http #90CAF9{
     	{field} {static} -LOGGER : Logger
     	{field} -delay : int
     	{field} -server : HttpServer
-    	{method} +addContext ( paramString1 : String , paramHttpHandler2 : HttpHandler ) : void
-    	{method} +applyRoutes ( paramRouter1 : Router ) : void
+    	{method} +addContext ( path : String , handler : HttpHandler ) : void
+    	{method} +applyRoutes ( router : Router ) : void
     	{method} +start () : void
     	{method} +stop () : void
     }
@@ -269,14 +251,14 @@ package http #90CAF9{
 
 
     class Router {
-    	{method} +register ( paramRoute1 : Route ) : void
+    	{method} +register ( route : Route ) : void
     }
 }
 
 Application *--  Router : router
 Application *--  VulnaHttpServer : server
 BlindSqliChallenge *--  Configuration : articleConfig
-BlindSqliChallenge *--  DatabaseManager : dbManager
+BlindSqliChallenge *--  DatabaseManager : manager
 BlindSqliChallenge --|>  Challenge
 BlindSqliHandler *--  BlindSqliService : service
 BlindSqliHandler *--  Configuration : challengeConfig
@@ -289,7 +271,7 @@ Challenge *--  Configuration : config
 ChallengesHandler --|>  BaseHandler
 DatabaseManager *--  Configuration : config
 LoginSqliChallenge *--  Configuration : articleConfig
-LoginSqliChallenge *--  DatabaseManager : dbManager
+LoginSqliChallenge *--  DatabaseManager : manager
 LoginSqliChallenge --|>  Challenge
 LoginSqliHandler *--  Configuration : challengeConfig
 LoginSqliHandler *--  LoginSqliService : service
