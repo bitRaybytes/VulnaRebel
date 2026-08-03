@@ -3,7 +3,9 @@ package core;
 import article.ArticleCard;
 import article.ResourceIndexHandler;
 import challenge.Challenge;
+import challenge.challengesIndex.ChallengesHandler;
 import challenge.blindsqli.BlindSqliChallenge;
+import challenge.ChallengeLink;
 import challenge.loginsqli.LoginSqliChallenge;
 import challenge.reconnaissance.ReconnaissanceChallenge;
 import challenge.reflectedxss.ReflectedXssChallenge;
@@ -12,7 +14,6 @@ import challenge.unionbasedsqli.UnionSqliChallenge;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
-import challenge.ChallengesHandler;
 import http.Route;
 import http.Router;
 import http.VulnaHttpServer;
@@ -50,11 +51,18 @@ public class Main {
                 .map(Optional::get)
                 .toList();
 
+        List<ChallengeLink> links = challenges.stream()
+                .map(Challenge::challengeLink)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+
         // Router
         Router router = new Router();
         router.register(new Route(
-                appConfig.getString("application.challengesRoute"), new ChallengesHandler()));
-        router.register(new Route("/resources", new ResourceIndexHandler(cards)));
+                appConfig.getString("application.challengesRoute"), new ChallengesHandler(links)));
+        router.register(new Route(
+                appConfig.getString("application.resourcesRoute"), new ResourceIndexHandler(cards)));
         for (Challenge challenge : challenges){
             for (Route route : challenge.routes()){
                 router.register(route);
