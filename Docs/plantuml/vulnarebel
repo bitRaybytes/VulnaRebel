@@ -32,7 +32,7 @@ abstract class challenge.Challenge {
 }
 
 
-class challenge.ChallengesHandler {
+class challenge.challengesIndex.ChallengesHandler {
 	{method} #doGet ( paramHttpExchange1 : com.sun.net.httpserver.HttpExchange ) : void
 }
 
@@ -275,7 +275,7 @@ article.ResourceHandler --|>  http.BaseHandler
 article.ResourceIndexHandler "1" o-- "0..*"  article.ArticleCard : cards
 article.ResourceIndexHandler --|>  http.BaseHandler
 challenge.Challenge *--  config.Configuration : config
-challenge.ChallengesHandler --|>  http.BaseHandler
+challenge.challengesIndex.ChallengesHandler --|>  http.BaseHandler
 challenge.blindsqli.BlindSqliChallenge *--  config.Configuration : articleConfig
 challenge.blindsqli.BlindSqliChallenge *--  database.DatabaseManager : dbManager
 challenge.blindsqli.BlindSqliChallenge --|>  challenge.Challenge
