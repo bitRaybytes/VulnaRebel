@@ -3,6 +3,7 @@ package challenge.unionbasedsqli;
 import article.ArticleCard;
 import article.ResourceHandler;
 import challenge.Challenge;
+import challenge.ChallengeLink;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
@@ -61,4 +62,14 @@ public class UnionSqliChallenge extends Challenge {
         new SchemaInitializer(manager)
                 .initialize(config().getString("challenge.initialize"));
     }
+
+    @Override
+    public Optional<ChallengeLink> challengeLink() {
+        return Optional.of(new ChallengeLink(
+                config().getString("challenge.route"),
+                config().getString("challenge.name"),
+                config().getString("challenge.difficulty")
+        ));
+    }
+
 }

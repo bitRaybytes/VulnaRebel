@@ -85,4 +85,20 @@ public abstract class Challenge {
     public Optional<ArticleCard> articleCard() {
         return Optional.empty();
     }
+
+    /**
+     * Returns the {@link ChallengeLink} for this challenge,
+     * used to populate the challenge dashboard page.
+     * <p>
+     * Challenges that do appear on the dashboard must override this method
+     * and return an {@link Optional} containing a fully populated
+     * {@link ChallengeLink} with the challenge's route, title,
+     * and difficulty level.
+     * </p>
+     *
+     * @return an {@link Optional} containing the {@link ChallengeLink},
+     *         or {@link Optional#empty()} if this challenge
+     *         should not appear on the dashboard
+     */
+    public abstract Optional<ChallengeLink> challengeLink();
 }

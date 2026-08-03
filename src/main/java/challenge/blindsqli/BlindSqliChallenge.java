@@ -3,6 +3,7 @@ package challenge.blindsqli;
 import article.ArticleCard;
 import article.ResourceHandler;
 import challenge.Challenge;
+import challenge.ChallengeLink;
 import config.Configuration;
 import config.ConfigurationLoader;
 import database.DatabaseManager;
@@ -59,6 +60,15 @@ public class BlindSqliChallenge extends Challenge {
                 articleConfig.getString("card.title"),
                 articleConfig.getString("card.description"),
                 articleConfig.getString("card.routing")
+        ));
+    }
+
+    @Override
+    public Optional<ChallengeLink> challengeLink() {
+        return Optional.of(new ChallengeLink(
+                config().getString("challenge.route"),
+                config().getString("challenge.name"),
+                config().getString("challenge.difficulty")
         ));
     }
 
