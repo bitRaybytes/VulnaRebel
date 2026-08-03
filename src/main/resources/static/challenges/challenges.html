@@ -7,26 +7,13 @@
         *{font-family:helvetica; line-height:1.5;}
         li{font-size:18px;}
         body{
-            height:100dvh;
+            min-height:100dvh;
             display:flex;
             flex-direction:column;
             align-items:center;
         }
         a{text-decoration:none; color:black;}
         a:hover{text-decoration:underline; color:blue;}
-        .challengeLink{
-            cursor:pointer;
-            text-align:center;
-            font-weight:bold;
-            margin:10px 0;
-            font-size:18px;
-            background-color:lightgrey;
-            padding:10px;
-            border-radius:10px;
-            border-shadow:5px black;
-            width:250px;
-        }
-
         .challengeLink:hover{background-color:white;}
     </style>
 </head>
@@ -74,11 +61,7 @@
         <div style="display:flex; flex-direction:column; align-items:center; width:430px;
                     background-color:grey; padding:40px; border-radius:15px;">
             <h3 style="font-size:20px;">Choose a challenge:</h3>
-            <a class="challengeLink" href="/login-sql-injection">Login SQL Injection (easy)</a>
-            <a class="challengeLink" href="/blindsqli">Blind SQLi (medium)</a>
-            <a class="challengeLink" href="/union-sql-injection">UNION-based SQLi (medium)</a>
-            <a class="challengeLink" href="/reflectedxss">Reflected XSS (easy)</a>
-            <a class="challengeLink" href="/storedxss">Stored XSS (medium)</a>
+            {{challenge.link}}
         </div>
     </div>
     <footer>
