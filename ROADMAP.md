@@ -17,8 +17,8 @@ These are the main steps:
 
 ## Phase 1 – Project Cleanup
 
-* [ ] Remove `archetype-resources`
-* [ ] Remove unnecessary Maven archetype files
+* [X] Remove `archetype-resources`
+* [X] Remove unnecessary Maven archetype files
 * [X] Rename package `Service` → `service`
 * [X] Ensure all Java packages follow lowercase naming conventions
 * [X] Create proper package hierarchy
@@ -28,8 +28,8 @@ These are the main steps:
 ## Phase 2 – Configuration System
 
 ### Logging
-* [ ] Log errors and infos from all classes
-* [ ] Time and Date if possible
+* [X] Log errors and infos from all classes
+* [X] Time and Date if possible
 * [ ] Output in a file under `logs/` directory
 
 ### Configuration
