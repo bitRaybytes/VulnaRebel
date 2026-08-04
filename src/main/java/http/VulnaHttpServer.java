@@ -3,6 +3,7 @@ package http;
 import com.sun.net.httpserver.HttpHandler;
 import config.Configuration;
 import exceptions.VulnaHttpServerException;
+import logging.Loggers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
   * If calling a {@code VulnaHttpServer} object the server will get implicitly instantiated.
   * */
 public class VulnaHttpServer {
-    private static final Logger LOGGER = Logger.getLogger(VulnaHttpServer.class.getName());
+    private static final Logger LOG = Loggers.get(VulnaHttpServer.class);
     private final int delay;
     private final com.sun.net.httpserver.HttpServer server;
 
@@ -55,7 +56,8 @@ public class VulnaHttpServer {
             );
         }
         server.start();
-        LOGGER.info("Server started on port " + server.getAddress().getPort());
+        LOG.info(
+                () -> "HTTP server started on port " + server.getAddress().getPort());
     }
 
      /**
@@ -64,6 +66,7 @@ public class VulnaHttpServer {
     public void stop() {
         if (server != null) {
             server.stop(delay);
+            LOG.info("Server stopped.");
         }
     }
 
@@ -79,6 +82,7 @@ public class VulnaHttpServer {
                             ": Router cannot be null."
             );
         }
+        LOG.info(() -> "Applying " + router.getRoutes().size() + " routes.");
         for (Route route : router.getRoutes()) {
             addContext(route.getPath(), route.getHandler());
         }
@@ -102,5 +106,7 @@ public class VulnaHttpServer {
             );
         }
         server.createContext(path, handler);
+        LOG.fine(()-> "Added context '" + path +
+                "' -> "+ handler.getClass().getSimpleName()+".");
     }
 }

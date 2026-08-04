@@ -1,15 +1,18 @@
 package http;
 
 import exceptions.RouterException;
+import logging.Loggers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * This class owns a collection of {@link Route} objects and registers them.
  */
 public class Router {
     // TODO Return a Map<String,Route>, provides much better duplicate handling and lookup
+    private static final Logger LOG = Loggers.get(Router.class);
     private final List<Route> routes;
 
     public Router(){
@@ -37,8 +40,9 @@ public class Router {
                 );
             }
         }
-
         routes.add(route);
+        LOG.fine(() -> "Registered route: " + route.getPath() +
+                " -> " + route.getHandler().getClass().getSimpleName());
     }
 
     /**

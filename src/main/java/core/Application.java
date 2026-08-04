@@ -3,6 +3,7 @@ package core;
 import exceptions.ApplicationException;
 import http.Router;
 import http.VulnaHttpServer;
+import logging.Loggers;
 
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * </p>
  */
 public class Application {
-    private static final Logger LOG = Logger.getLogger(Application.class.getName());
+    private static final Logger LOG = Loggers.get(Application.class);
 
     private final VulnaHttpServer server;
     private final Router router;
@@ -38,9 +39,19 @@ public class Application {
      * for incoming HTTP connections.
      */
     public void start() {
+        long start = System.nanoTime();
+
+        //LOG.info("Apply routes to the HTTP server.");
         server.applyRoutes(router);
+
+        LOG.info("Starting HTTP server.");
         server.start();
-        LOG.info(getClass().getName() + " – VulnaRebel started.");
+
+        LOG.info("VulnaRebel started.");
+
+        long elapsed = (System.nanoTime() - start) / 1_000_000;
+
+        LOG.info(()-> "HTTP server startup completed in " + elapsed + " ms.");
     }
 
     /**
@@ -48,7 +59,7 @@ public class Application {
      */
     public void stop() {
         server.stop();
-        LOG.info(getClass().getName() + " – VulnaRebel stopped.");
+        LOG.info("VulnaRebel stopped.");
     }
 
     private void validate(VulnaHttpServer server, Router router) {

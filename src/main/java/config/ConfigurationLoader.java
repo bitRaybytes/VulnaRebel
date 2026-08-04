@@ -1,9 +1,11 @@
 package config;
 
 import exceptions.ConfigurationLoaderException;
+import logging.Loggers;
 
 import java.io.*;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * Loads {@code .properties} files from the classpath and returns
@@ -24,7 +26,7 @@ import java.util.Properties;
  * </p>
  */
 public class ConfigurationLoader {
-
+    private static final Logger LOG = Loggers.get(ConfigurationLoader.class);
     /**
      * Loads a {@code .properties} file from the classpath and returns
      * a {@link Configuration} wrapping its key-value pairs.
@@ -33,10 +35,8 @@ public class ConfigurationLoader {
      *                          classpath root, e.g.
      *                          {@code "challenges/loginsqli/challenge.properties"}
      * @return a populated {@link Configuration} instance
-     * @throws ConfigurationLoaderException if the resource is null, blank,
-     *                                      or not found on the classpath
-     * @throws RuntimeException             if an {@link java.io.IOException}
-     *                                      occurs while reading the stream
+     * @throws ConfigurationLoaderException if the resource is null, blank, cannot be found,
+     *                              or an I/O error occurs while reading the properties file.
      */
     public static Configuration load(String classpathResource){
         validateResource(classpathResource);
@@ -51,8 +51,10 @@ public class ConfigurationLoader {
                                 ": Configure file '" + classpathResource + "' not found.");
             }
             properties.load(in);
+            LOG.fine(() -> "Loaded configuration: " + classpathResource);
             return new Configuration(properties);
         } catch (IOException e) {
+            LOG.severe(() -> "Configuration file not found: " + classpathResource);
             throw new ConfigurationLoaderException(
                     ConfigurationLoader.class.getName()+
                             ": Failure in InputStream occurred ",e);

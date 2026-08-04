@@ -2,6 +2,7 @@ package database;
 
 import config.Configuration;
 import exceptions.DatabaseManagerException;
+import logging.Loggers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
  * }</pre>
  */
 public class DatabaseManager {
-    private static final Logger LOGGER = Logger.getLogger(DatabaseManager.class.getName());
+    private static final Logger LOG = Loggers.get(DatabaseManager.class);
 
     private final Configuration config;
 
@@ -38,7 +39,6 @@ public class DatabaseManager {
      */
     public DatabaseManager(Configuration config){
         if (config == null){
-            LOGGER.warning("No configuration file detected. ");
             throw new DatabaseManagerException(DatabaseManager.class.getName() +
                     ": Cannot connect to database without configuration file. ");
         }
@@ -65,18 +65,29 @@ public class DatabaseManager {
         SQLException sqlErrorMsg = null;
 
         for (int i = 1; i<=retries;i++){
+            LOG.fine("Attempting database connection (" + i + "/" + retries + ").");
+
             try{
                 connection = DriverManager.getConnection(
                         config.getString("database.url"), // change here to "database.url.dev" for local database connection
                         config.getString("database.user"),
                         config.getString("database.pass"));
 
+                LOG.fine("Database connection established.");
                 return connection;
             }catch (SQLException e) {
+                LOG.warning(
+                        "Database connection attempt "
+                                + i + "/" + retries
+                                + " failed: "
+                                + e.getMessage());
                 Thread.sleep(retryDelay);
                 sqlErrorMsg = e;
             }
         }
+        LOG.severe(
+                "Unable to establish database connection after "
+                        + retries + " attempts.");
 
         throw new DatabaseManagerException(DatabaseManager.class.getName()+":\n"+
                 "failed after " + retries +

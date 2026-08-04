@@ -2,12 +2,15 @@ package database;
 
 import config.Configuration;
 import exceptions.SchemaInitializerException;
+import logging.Loggers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Initializes the database schema and seed data for a challenge module.
@@ -33,7 +36,7 @@ import java.sql.SQLException;
  * </pre>
  */
 public class SchemaInitializer {
-
+    private static final Logger LOG = Loggers.get(SchemaInitializer.class);
     private final DatabaseManager manager;
 
     /**
@@ -77,11 +80,16 @@ public class SchemaInitializer {
                             ": Given parameter cannot be null."
             );
         }
+        LOG.info(() -> "Initializing schema for challenge '" + challengeName + "'.");
 
         try (Connection conn = manager.getConnection()) {
             executeSqlFile(conn, "challenges/" + challengeName + "/schema.sql");
             executeSqlFile(conn, "challenges/" + challengeName + "/seed.sql");
         } catch (SQLException | InterruptedException e) {
+
+            LOG.log(Level.SEVERE,
+                    "Database initialization failed for '" + challengeName + "'", e);
+
             throw new SchemaInitializerException(
                     SchemaInitializer.class.getName()+
                             ": Failed to initialize database table.", e);
@@ -104,6 +112,7 @@ public class SchemaInitializer {
                 if (!trimmed.isEmpty()) {
                     try (var stmt = conn.createStatement()) {
                         stmt.execute(trimmed);
+                        LOG.fine(() -> "Executing SQL script: " + path);
                     }
                 }
             }
@@ -113,5 +122,4 @@ public class SchemaInitializer {
                             ": Failed to read sql file.", e);
         }
     }
-
 }
